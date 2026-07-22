@@ -1,0 +1,200 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "kalachakra"
+version = "0.1.0"
+description = "A Computational Intelligence Framework for Astronomical Dynamics, Vedic Knowledge Representation, Probabilistic Forecasting, and Quantum-Enhanced Temporal Reasoning"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.11"
+authors = [
+    { name = "Siddharth Patni" },
+]
+keywords = [
+    "computational-astronomy",
+    "time-series-forecasting",
+    "graph-neural-networks",
+    "bayesian-inference",
+    "explainable-ai",
+    "scientific-machine-learning",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Scientific/Engineering :: Astronomy",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+# --- Core Dependencies (Milestone 1) ---
+dependencies = [
+    # Core
+    "numpy>=1.26",
+    "scipy>=1.12",
+    "pandas>=2.2",
+    "polars>=0.20",
+
+    # Astronomy
+    "pyswisseph>=2.10",
+    "skyfield>=1.48",
+    "astropy>=6.0",
+
+    # Classical ML
+    "scikit-learn>=1.4",
+    "xgboost>=2.0",
+    "lightgbm>=4.3",
+    "catboost>=1.2",
+
+    # Visualization
+    "matplotlib>=3.8",
+    "seaborn>=0.13",
+    "plotly>=5.18",
+
+    # Configuration
+    "pydantic>=2.6",
+    "pydantic-settings>=2.1",
+    "pyyaml>=6.0",
+    "python-dotenv>=1.0",
+    "rich>=13.7",
+    "loguru>=0.7",
+
+    # Data
+    "duckdb>=0.10",
+    "pyarrow>=15.0",
+
+    # Experiment Tracking
+    "mlflow>=2.11",
+]
+
+[project.optional-dependencies]
+# --- Deep Learning (Milestone 2) ---
+deep = [
+    "torch>=2.2",
+    "pytorch-lightning>=2.2",
+    "torchvision>=0.17",
+    "pytorch-forecasting>=1.0",
+    "darts>=0.28",
+    "neuralforecast>=1.7",
+]
+
+# --- Graph AI (Milestone 2) ---
+graph = [
+    "torch-geometric>=2.5",
+    "networkx>=3.2",
+    "pykeen>=1.10",
+]
+
+# --- Probabilistic AI (Milestone 2) ---
+probabilistic = [
+    "pymc>=5.10",
+    "numpyro>=0.14",
+    "gpytorch>=1.11",
+    "botorch>=0.10",
+]
+
+# --- XAI (Milestone 2) ---
+xai = [
+    "shap>=0.44",
+    "lime>=0.2",
+    "captum>=0.7",
+]
+
+# --- Causal AI (Milestone 3) ---
+causal = [
+    "dowhy>=0.11",
+    "causal-learn>=0.1",
+]
+
+# --- Scientific ML (Milestone 3) ---
+scientific = [
+    "torchdiffeq>=0.2",
+    "neurodiffeq>=0.6",
+]
+
+# --- TDA (Milestone 3) ---
+tda = [
+    "giotto-tda>=0.6",
+    "ripser>=0.6",
+]
+
+# --- Quantum ML (Milestone 4) ---
+quantum = [
+    "pennylane>=0.35",
+    "qiskit>=1.0",
+]
+
+# --- LLM + RAG (Milestone 4) ---
+llm = [
+    "langchain>=0.1",
+    "langchain-community>=0.0.20",
+    "faiss-cpu>=1.8",
+    "sentence-transformers>=2.5",
+]
+
+# --- API (Milestone 5) ---
+api = [
+    "fastapi>=0.110",
+    "uvicorn>=0.28",
+    "strawberry-graphql>=0.220",
+    "websockets>=12.0",
+]
+
+# --- AutoML (Milestone 4) ---
+automl = [
+    "optuna>=3.5",
+    "flaml>=2.1",
+]
+
+# --- Distributed (Milestone 5) ---
+distributed = [
+    "ray[tune]>=2.9",
+    "deepspeed>=0.14",
+]
+
+# --- All (everything) ---
+all = [
+    "kalachakra[deep,graph,probabilistic,xai,causal,scientific,tda,quantum,llm,api,automl,distributed]",
+]
+
+# --- Development ---
+dev = [
+    "pytest>=8.0",
+    "pytest-cov>=4.1",
+    "pytest-asyncio>=0.23",
+    "mypy>=1.8",
+    "ruff>=0.3",
+    "pre-commit>=3.6",
+    "ipykernel>=6.29",
+    "jupyterlab>=4.1",
+]
+
+[project.scripts]
+kalachakra = "kalachakra.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/siddharthpatni/project-kalachakra"
+Documentation = "https://project-kalachakra.readthedocs.io"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/kalachakra"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+src = ["src"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "A", "SIM", "TCH"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v --tb=short"
