@@ -28,6 +28,15 @@ coverage.xml
 # --- Jupyter ---
 .ipynb_checkpoints/
 
+# --- Node / frontend (dashboard) ---
+node_modules/
+dashboard/dist/
+dashboard/.vite/
+*.tsbuildinfo
+npm-debug.log*
+pnpm-debug.log*
+yarn-error.log*
+
 # --- Experiment tracking / artifacts ---
 mlruns/
 wandb/

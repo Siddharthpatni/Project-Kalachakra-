@@ -1,0 +1,57 @@
+/* Kalachakra design tokens — deliberately single dark "cosmic" theme.
+   Palette = accretion-disk Doppler physics on an Indian gilt palette:
+   saffron/gold = receding (redshift) edge; cyan = approaching (blueshift). */
+:root {
+  --void: #08060f;
+  --night: #120a28;
+  --raise: #1d1240;
+  --saffron: #ff8a3d;
+  --gold: #e8b24c;
+  --cyan: #5bd6e8;
+  --vermilion: #e5433b;
+  --moonlight: #d9d2ec;
+  --ink: #efeafa;
+  --text: #c4bbd9;
+  --muted: #8b82a6;
+  --faint: #6a6288;
+  --line: rgba(178, 160, 232, 0.14);
+  --line-2: rgba(178, 160, 232, 0.28);
+
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, ui-serif, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  --deva: "Devanagari Sangam MN", "Noto Sans Devanagari", "Kohinoor Devanagari", var(--serif);
+
+  --maxw: 1120px;
+  --r: 14px;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background:
+    radial-gradient(1200px 800px at 50% -8%, rgba(120, 70, 220, 0.16), transparent 60%),
+    radial-gradient(900px 700px at 88% 12%, rgba(255, 138, 61, 0.07), transparent 55%),
+    var(--void);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+.wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.deva { font-family: var(--deva); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
