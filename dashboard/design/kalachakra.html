@@ -5,342 +5,354 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
 <body>
-<title>Kalachakra — 50-Domain Prediction Pipeline</title>
-<meta name="description" content="A calibrated future-prediction pipeline that aggregates 50 computational domains — astronomy, ML, causal, uncertainty — into one probability with a timing window." />
+<title>Kalachakra — What Happens Next</title>
+<meta name="description" content="A premium dark AI console for a 50-domain future-prediction pipeline: fifty computational domains aggregate a real birth chart into calibrated forecasts across career, finance, relationships, relocation, and health." />
 
 <style>
+  /* ===== Premium dark AI console — committed single dark theme ===== */
   :root {
-    --void: #08060f; --void-2: #0c0918; --night: #120a28; --night-2: #180e33; --raise: #1d1240;
-    --saffron: #ff8a3d; --gold: #e8b24c; --cyan: #5bd6e8; --vermilion: #e5433b; --moonlight: #d9d2ec;
-    --ink: #efeafa; --text: #c4bbd9; --muted: #8b82a6; --faint: #6a6288;
-    --line: rgba(178,160,232,0.14); --line-2: rgba(178,160,232,0.28);
-    --good: var(--cyan); --warn: var(--gold); --crit: var(--vermilion);
-    --serif: "Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,ui-serif,serif;
-    --sans: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-    --mono: ui-monospace,"SF Mono","JetBrains Mono","Roboto Mono",Menlo,Consolas,monospace;
-    --deva: "Devanagari Sangam MN","Noto Sans Devanagari","Kohinoor Devanagari","Mangal",var(--serif);
-    --maxw: 1120px; --r: 14px;
+    --bg: #08090e;
+    --bg-2: #0b0c13;
+    --panel: rgba(255,255,255,0.026);
+    --panel-2: rgba(255,255,255,0.05);
+    --panel-brd: rgba(255,255,255,0.08);
+    --panel-brd-2: rgba(255,255,255,0.14);
+    --ink: #f6f7fc;
+    --text: #b6b9cb;
+    --muted: #787c92;
+    --faint: #565a70;
+    --line: rgba(255,255,255,0.07);
+    --accent: #6d6bff;
+    --accent-2: #b45cff;
+    --accent-3: #ff5ca8;
+    --cyan: #34e3ff;
+    --good: #2ee6a6;
+    --warn: #ffb020;
+    --crit: #ff5c6a;
+    --grad: linear-gradient(115deg, #6d6bff 0%, #b45cff 52%, #ff5ca8 100%);
+    --grad-cool: linear-gradient(115deg, #6d6bff, #34e3ff);
+    --sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+    --maxw: 1140px; --r: 18px; --r-sm: 12px;
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body {
-    margin: 0;
-    background:
-      radial-gradient(1200px 800px at 50% -8%, rgba(120,70,220,0.16), transparent 60%),
-      radial-gradient(900px 700px at 88% 12%, rgba(255,138,61,0.07), transparent 55%),
-      radial-gradient(900px 700px at 8% 30%, rgba(91,214,232,0.06), transparent 55%),
-      var(--void);
-    color: var(--text); font-family: var(--sans); font-size: 16px; line-height: 1.6;
+    margin: 0; color: var(--text); font-family: var(--sans); font-size: 16px; line-height: 1.6;
     -webkit-font-smoothing: antialiased; overflow-x: hidden;
+    background:
+      radial-gradient(1100px 640px at 50% -10%, rgba(109,107,255,0.22), transparent 60%),
+      radial-gradient(760px 520px at 92% 4%, rgba(255,92,168,0.12), transparent 55%),
+      radial-gradient(720px 520px at 4% 18%, rgba(52,227,255,0.10), transparent 55%),
+      var(--bg);
+    background-attachment: fixed;
   }
   a { color: inherit; text-decoration: none; }
-  ::selection { background: rgba(255,138,61,0.28); color: #fff; }
+  ::selection { background: rgba(109,107,255,0.32); color: #fff; }
   .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
-  .eyebrow { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); }
-  code { font-family: var(--mono); font-size: 0.92em; color: var(--moonlight); }
+  .eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); font-weight: 600; }
+  .mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+  .grad-text { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .panel { background: var(--panel); border: 1px solid var(--panel-brd); border-radius: var(--r);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 20px 50px -30px rgba(0,0,0,0.9); backdrop-filter: blur(6px); }
 
-  header { position: sticky; top: 0; z-index: 30; backdrop-filter: blur(10px);
-    background: linear-gradient(to bottom, rgba(8,6,15,0.86), rgba(8,6,15,0.25)); border-bottom: 1px solid var(--line); }
-  .bar { display: flex; align-items: center; justify-content: space-between; height: 60px; }
-  .brand { display: flex; align-items: baseline; gap: 12px; }
-  .brand .dev { font-family: var(--deva); font-size: 22px; color: var(--ink); }
-  .brand .lat { font-family: var(--mono); font-size: 11px; letter-spacing: 0.3em; color: var(--muted); text-transform: uppercase; }
-  nav.links { display: flex; gap: 24px; }
-  nav.links a { font-size: 13px; color: var(--muted); transition: color .2s; }
-  nav.links a:hover { color: var(--ink); }
-  @media (max-width: 820px){ nav.links { display: none; } }
+  /* header */
+  header { position: sticky; top: 0; z-index: 40; backdrop-filter: blur(16px);
+    background: linear-gradient(to bottom, rgba(8,9,14,0.9), rgba(8,9,14,0.4)); border-bottom: 1px solid var(--line); }
+  .bar { display: flex; align-items: center; justify-content: space-between; height: 62px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; color: var(--ink); letter-spacing: -0.01em; }
+  .brand .mark { width: 20px; height: 20px; border-radius: 6px; background: var(--grad); box-shadow: 0 0 16px rgba(140,100,255,0.6); }
+  nav.links { display: flex; gap: 6px; }
+  nav.links a { font-size: 13px; color: var(--muted); padding: 7px 12px; border-radius: 8px; transition: color .2s, background .2s; }
+  nav.links a:hover { color: var(--ink); background: var(--panel-2); }
+  .live { display: flex; align-items: center; gap: 7px; font-family: var(--mono); font-size: 11px; color: var(--muted); }
+  .live .d { width: 7px; height: 7px; border-radius: 50%; background: var(--good); box-shadow: 0 0 8px var(--good); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+  @media (max-width: 860px){ nav.links { display: none; } }
 
   /* hero */
-  .hero { position: relative; min-height: 88svh; display: grid; place-items: center; overflow: hidden; }
-  #chakra { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-  .hero-veil { position: absolute; inset: 0; pointer-events: none;
-    background: radial-gradient(62% 62% at 50% 46%, transparent 38%, rgba(8,6,15,0.62) 100%); }
-  .hero-copy { position: relative; z-index: 5; text-align: center; padding: 0 24px; max-width: 820px; pointer-events: none; }
-  .hero-copy .eyebrow { display:inline-block; margin-bottom: 20px; }
-  h1.title { font-family: var(--deva); font-weight: 600; color: var(--ink);
-    font-size: clamp(46px, 10.5vw, 116px); line-height: 0.92; margin: 0; text-wrap: balance;
-    text-shadow: 0 0 44px rgba(120,70,220,0.5), 0 0 120px rgba(255,138,61,0.18); }
-  h1.title .roman { display:block; font-family: var(--serif); font-style: italic; font-weight: 500;
-    font-size: clamp(17px, 3.1vw, 27px); letter-spacing: 0.02em; color: var(--gold); margin-top: 14px; text-shadow:none; }
-  .lede { margin: 20px auto 0; max-width: 60ch; color: var(--text); font-size: clamp(15px, 1.9vw, 19px); }
-  .lede b { color: var(--moonlight); font-weight: 600; }
-  .chips { display:flex; flex-wrap: wrap; gap: 10px; justify-content:center; margin-top: 24px; }
-  .chip { font-family: var(--mono); font-size: 11px; color: var(--text); background: rgba(29,18,64,0.5);
-    border: 1px solid var(--line-2); border-radius: 999px; padding: 7px 13px; font-variant-numeric: tabular-nums; }
-  .chip b { color: var(--gold); font-weight: 600; }
-  .scrollcue { position:absolute; bottom: 20px; left:50%; transform: translateX(-50%);
-    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--faint); z-index: 5; }
-  .scrollcue::after { content:""; display:block; width:1px; height:32px; margin: 10px auto 0;
-    background: linear-gradient(var(--gold), transparent); animation: fall 2.4s ease-in-out infinite; }
-  @keyframes fall { 0%,100%{opacity:.3; transform: scaleY(.5);} 50%{opacity:1; transform: scaleY(1);} }
+  .hero { padding: 76px 0 40px; }
+  .hero h1 { font-size: clamp(46px, 8.5vw, 92px); line-height: 0.96; letter-spacing: -0.035em; color: var(--ink); margin: 18px 0 0; font-weight: 720; text-wrap: balance; }
+  .hero .sub { font-size: clamp(16px, 2vw, 20px); color: var(--text); max-width: 56ch; margin: 20px 0 0; }
+  .hero .sub b { color: var(--ink); font-weight: 600; }
+  .hero-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 26px; }
+  .hchip { font-family: var(--mono); font-size: 11.5px; color: var(--text); background: var(--panel); border: 1px solid var(--panel-brd); border-radius: 999px; padding: 7px 13px; }
+  .hchip b { color: var(--ink); }
 
-  section.band { padding: 90px 0; position: relative; }
-  .band + .band { border-top: 1px solid var(--line); }
-  .sec-head { max-width: 64ch; margin-bottom: 38px; }
-  .sec-head h2 { font-family: var(--serif); font-weight: 600; color: var(--ink);
-    font-size: clamp(26px, 4vw, 40px); line-height: 1.08; margin: 12px 0 0; text-wrap: balance; }
-  .sec-head p { margin: 16px 0 0; color: var(--text); font-size: 16.5px; }
+  .hero-main { display: grid; grid-template-columns: 1.1fr 1.3fr; gap: 18px; margin-top: 40px; }
+  @media (max-width: 940px){ .hero-main { grid-template-columns: 1fr; } }
 
-  .panel { border: 1px solid var(--line-2); border-radius: var(--r);
-    background: linear-gradient(180deg, rgba(18,10,40,0.66), rgba(10,7,20,0.5)); padding: 24px; }
-  .panel-head { display:flex; align-items:baseline; justify-content:space-between; gap:16px; margin-bottom: 6px; }
-  .panel-head h3 { font-family: var(--serif); color: var(--ink); font-size: 18px; margin:0; font-weight:600; }
-  .badge { font-family: var(--mono); font-size: 10px; letter-spacing:0.14em; text-transform: uppercase;
-    color: var(--gold); border: 1px solid rgba(232,178,76,0.4); border-radius: 999px; padding: 4px 9px; }
-  .panel .note { font-size: 12.5px; color: var(--muted); margin: 2px 0 18px; }
+  /* big forecast module */
+  .fc { padding: 30px; display: flex; flex-direction: column; }
+  .fc .top { display: flex; align-items: center; justify-content: space-between; }
+  .fc .label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+  .badge { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); border: 1px solid var(--panel-brd-2); border-radius: 999px; padding: 4px 10px; }
+  .fc .bignum { font-size: clamp(72px, 12vw, 120px); line-height: 1; font-weight: 760; letter-spacing: -0.04em; margin: 14px 0 0; }
+  .fc .bignum small { font-size: 0.28em; color: var(--muted); font-weight: 600; letter-spacing: 0; margin-left: 10px; font-family: var(--mono); }
+  .fc .ci { font-family: var(--mono); font-size: 13px; color: var(--muted); margin-top: 6px; }
+  .fc .meter { height: 8px; border-radius: 999px; background: rgba(255,255,255,0.08); margin-top: 22px; overflow: hidden; position: relative; }
+  .fc .meter .fill { height: 100%; border-radius: 999px; background: var(--grad); width: 0; transition: width 1.3s cubic-bezier(.2,.8,.2,1); box-shadow: 0 0 18px rgba(140,100,255,0.6); }
+  .fc .meter .base { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--warn); }
+  .fc-rows { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 26px; }
+  .fc-cell .k { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  .fc-cell .v { font-size: 19px; color: var(--ink); font-weight: 650; font-variant-numeric: tabular-nums; margin-top: 3px; }
+  .fc-cell .v small { font-size: 12px; color: var(--muted); font-family: var(--mono); font-weight: 500; }
+  .pill { font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; border-radius: 999px; padding: 4px 9px; font-weight: 600; display: inline-block; }
+  .pill.ok { background: rgba(46,230,166,0.14); color: var(--good); border: 1px solid rgba(46,230,166,0.3); }
+  .pill.warn { background: rgba(255,176,32,0.14); color: var(--warn); border: 1px solid rgba(255,176,32,0.3); }
 
-  /* ---------- PIPELINE FLOW ---------- */
-  .flow { display: grid; grid-template-columns: 1fr; gap: 14px; }
-  .stage-label { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--faint); margin-bottom: 8px; }
-  .input-bar { display:flex; flex-wrap: wrap; gap: 10px; align-items:center; }
-  .field { background: rgba(29,18,64,0.5); border: 1px solid var(--line-2); border-radius: 10px; padding: 9px 13px; min-width: 0; }
-  .field .k { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); display:block; }
-  .field .v { font-size: 14px; color: var(--ink); }
-  .field .v .dev { font-family: var(--deva); }
-  .flowarrow { text-align:center; color: var(--gold); font-size: 18px; line-height: 1; opacity: 0.7; }
+  /* pipeline mini in hero */
+  .flow { padding: 26px; }
+  .flow .label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+  .layers { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; }
+  @media (max-width: 480px){ .layers { grid-template-columns: 1fr; } }
+  .layer { border: 1px solid var(--panel-brd); border-radius: var(--r-sm); padding: 13px 14px; background: var(--panel); }
+  .layer .top { display: flex; justify-content: space-between; align-items: baseline; }
+  .layer .lid { font-family: var(--mono); font-size: 9.5px; color: var(--faint); }
+  .layer .cnt { font-family: var(--mono); font-size: 9.5px; color: var(--accent); }
+  .layer .lname { font-size: 12.5px; color: var(--ink); margin-top: 7px; font-weight: 550; min-height: 2.5em; }
+  .layer .row { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; }
+  .gate { display: flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 10px; color: var(--muted); }
+  .dot { width: 6px; height: 6px; border-radius: 50%; }
+  .dot.pass { background: var(--good); box-shadow: 0 0 7px var(--good); }
+  .dot.gated { background: var(--faint); }
+  .dz { font-family: var(--mono); font-size: 12.5px; font-weight: 650; }
+  .pos { color: var(--good); } .neg { color: var(--crit); }
+  .agg { margin-top: 14px; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 16px; border: 1px solid var(--panel-brd-2); border-radius: var(--r-sm); background: linear-gradient(120deg, rgba(109,107,255,0.1), transparent); }
+  .agg .f { font-family: var(--mono); font-size: 13px; color: var(--ink); }
+  .agg .f .op { color: var(--accent); }
+  .agg .s { font-family: var(--mono); font-size: 14px; color: var(--ink); font-weight: 700; }
 
-  .layers { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
-  @media (max-width: 900px){ .layers { grid-template-columns: repeat(3,1fr); } }
-  @media (max-width: 520px){ .layers { grid-template-columns: repeat(2,1fr); } }
-  .layer { border: 1px solid var(--line-2); border-radius: 12px; padding: 14px 12px; position: relative; overflow: hidden;
-    background: linear-gradient(180deg, rgba(24,14,51,0.55), rgba(12,9,24,0.35)); }
-  .layer .cap { display:flex; justify-content: space-between; align-items:baseline; gap: 6px; }
-  .layer .cap .n { font-family: var(--mono); font-size: 9.5px; color: var(--faint); }
-  .layer .cap .cnt { font-family: var(--mono); font-size: 10px; color: var(--gold); }
-  .layer .name { font-size: 12.5px; color: var(--ink); margin-top: 6px; line-height: 1.25; min-height: 2.4em; }
-  .layer .gate { display:flex; align-items:center; gap: 6px; margin-top: 10px; font-family: var(--mono); font-size: 10px; }
-  .dot { width: 7px; height: 7px; border-radius: 50%; }
-  .dot.pass { background: var(--cyan); box-shadow: 0 0 8px var(--cyan); }
-  .dot.gated { background: var(--muted); }
-  .layer .contrib { font-family: var(--mono); font-size: 11px; margin-top: 4px; font-variant-numeric: tabular-nums; }
-  .pos { color: var(--cyan); } .neg { color: var(--vermilion); } .zero { color: var(--muted); }
+  /* sections */
+  section.band { padding: 64px 0; }
+  .sec-head { max-width: 60ch; margin-bottom: 30px; }
+  .sec-head h2 { font-size: clamp(26px, 4vw, 40px); letter-spacing: -0.025em; color: var(--ink); margin: 12px 0 0; font-weight: 700; text-wrap: balance; }
+  .sec-head p { margin: 14px 0 0; color: var(--text); font-size: 16px; }
 
-  .agg-node { display:flex; flex-wrap: wrap; align-items:center; justify-content: space-between; gap: 16px;
-    border: 1px solid rgba(232,178,76,0.35); border-radius: var(--r); padding: 18px 22px;
-    background: linear-gradient(180deg, rgba(255,138,61,0.08), rgba(12,9,24,0.4)); }
-  .agg-formula { font-family: var(--mono); font-size: 14px; color: var(--moonlight); }
-  .agg-formula .op { color: var(--gold); }
-  .agg-sum { font-family: var(--serif); font-size: 22px; color: var(--ink); font-variant-numeric: tabular-nums; }
+  /* what's next targets */
+  .targets { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 14px; }
+  .tcard { padding: 22px; position: relative; overflow: hidden; }
+  .tcard::before { content: ""; position: absolute; inset: 0 auto auto 0; width: 100%; height: 2px; background: var(--grad); opacity: .8; }
+  .tcard .ico { font-size: 20px; }
+  .tcard .tname { font-size: 15px; color: var(--ink); font-weight: 650; margin-top: 12px; }
+  .tcard .tp { font-size: 40px; font-weight: 720; letter-spacing: -0.03em; color: var(--ink); margin-top: 8px; font-variant-numeric: tabular-nums; }
+  .tcard .tp small { font-size: 13px; color: var(--muted); font-family: var(--mono); font-weight: 500; margin-left: 4px; }
+  .tcard .tmeter { height: 5px; border-radius: 999px; background: rgba(255,255,255,0.08); margin-top: 14px; overflow: hidden; }
+  .tcard .tmeter i { display: block; height: 100%; border-radius: 999px; width: 0; transition: width 1s cubic-bezier(.2,.8,.2,1); }
+  .tcard .twin { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-top: 12px; }
+  .tcard .twin b { color: var(--text); }
 
-  /* forecast output card */
-  .forecast { display: grid; grid-template-columns: 300px 1fr; gap: 22px; align-items: center; }
-  @media (max-width: 760px){ .forecast { grid-template-columns: 1fr; } }
-  .gauge-wrap { display:grid; place-items:center; }
-  .gauge-wrap svg { width: 260px; height: auto; max-width: 100%; }
-  .fc-meta { display:grid; gap: 14px; }
-  .fc-line { display:flex; align-items:baseline; justify-content: space-between; gap: 16px; border-bottom: 1px solid var(--line); padding-bottom: 12px; }
-  .fc-line:last-child { border-bottom: 0; }
-  .fc-line .k { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
-  .fc-line .v { font-family: var(--serif); font-size: 19px; color: var(--ink); font-variant-numeric: tabular-nums; text-align: right; }
-  .fc-line .v small { font-family: var(--mono); font-size: 12px; color: var(--muted); }
-  .pill { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; border-radius: 999px; padding: 3px 9px; }
-  .pill.ok { color: var(--void); background: var(--cyan); }
-  .pill.warn { color: var(--void); background: var(--gold); }
+  .two { display: grid; grid-template-columns: 1.05fr 1fr; gap: 18px; }
+  @media (max-width: 940px){ .two { grid-template-columns: 1fr; } }
+  .card { padding: 24px; }
+  .card .cap { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 6px; }
+  .card .cap h3 { margin: 0; font-size: 15px; font-weight: 600; color: var(--ink); }
+  .note { font-size: 12.5px; color: var(--muted); margin: 2px 0 18px; }
 
   /* waterfall */
-  .two { display: grid; grid-template-columns: 1.1fr 1fr; gap: 20px; }
-  @media (max-width: 900px){ .two { grid-template-columns: 1fr; } }
-  .wf { display:grid; gap: 11px; }
-  .wf-row { display:grid; grid-template-columns: 150px 1fr 58px; align-items:center; gap: 12px; }
-  @media (max-width: 560px){ .wf-row { grid-template-columns: 104px 1fr 48px; } }
+  .wf { display: grid; gap: 11px; }
+  .wf-row { display: grid; grid-template-columns: 150px 1fr 52px; align-items: center; gap: 12px; }
+  @media (max-width: 560px){ .wf-row { grid-template-columns: 96px 1fr 44px; } }
   .wf-row .lbl { font-size: 12.5px; color: var(--text); }
-  .wf-track { position: relative; height: 22px; }
-  .wf-track .axis { position:absolute; left:50%; top:-3px; bottom:-3px; width:1px; background: var(--line-2); }
-  .wf-bar { position:absolute; top:4px; height: 14px; border-radius: 4px; }
-  .wf-bar.pos { background: linear-gradient(90deg, rgba(91,214,232,0.4), var(--cyan)); }
-  .wf-bar.neg { background: linear-gradient(90deg, var(--vermilion), rgba(229,67,59,0.4)); }
-  .wf-row .val { font-family: var(--mono); font-size: 12px; text-align: right; font-variant-numeric: tabular-nums; }
-  .wf-total { display:flex; justify-content: space-between; margin-top: 8px; padding-top: 12px; border-top: 1px dashed var(--line-2);
-    font-family: var(--mono); font-size: 13px; color: var(--moonlight); }
+  .wf-track { position: relative; height: 20px; }
+  .wf-track .axis { position: absolute; left: 50%; top: -2px; bottom: -2px; width: 1px; background: var(--panel-brd-2); }
+  .wf-bar { position: absolute; top: 4px; height: 12px; border-radius: 4px; width: 0; left: 50%; transition: width .9s cubic-bezier(.2,.8,.2,1), left .9s cubic-bezier(.2,.8,.2,1); }
+  .wf-bar.pos { background: linear-gradient(90deg, rgba(46,230,166,0.4), var(--good)); }
+  .wf-bar.neg { background: linear-gradient(90deg, var(--crit), rgba(255,92,106,0.4)); }
+  .wf-row .val { font-family: var(--mono); font-size: 12px; text-align: right; }
+  .wf-total { display: flex; justify-content: space-between; margin-top: 8px; padding-top: 12px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: 12.5px; color: var(--ink); }
 
-  /* MI screen (the gate) */
+  /* mi */
   .mi { display: grid; gap: 12px; }
-  .mi-row { display: grid; grid-template-columns: 158px 1fr 58px; align-items:center; gap: 12px; }
-  @media (max-width: 560px){ .mi-row { grid-template-columns: 104px 1fr 48px; } }
-  .mi-row .lbl { font-size: 13px; color: var(--text); } .mi-row .lbl .en { color: var(--muted); font-size: 11px; display:block; }
-  .mi-track { position: relative; height: 11px; border-radius: 6px; background: rgba(139,130,166,0.14); overflow: hidden; }
-  .mi-fill { position:absolute; inset: 0 auto 0 0; border-radius: 6px; width:0;
-    background: linear-gradient(90deg, rgba(91,214,232,0.5), var(--cyan)); transition: width 1.1s cubic-bezier(.2,.7,.2,1); }
-  .mi-row.control .mi-fill { background: linear-gradient(90deg, rgba(139,130,166,0.3), var(--muted)); }
-  .mi-row .val { font-family: var(--mono); font-size: 12px; color: var(--moonlight); text-align:right; font-variant-numeric: tabular-nums; }
-  .noise { position:absolute; top:-4px; bottom:-4px; width:0; border-left: 1px dashed rgba(229,67,59,0.7); }
+  .mi-row { display: grid; grid-template-columns: 150px 1fr 52px; align-items: center; gap: 12px; }
+  @media (max-width: 560px){ .mi-row { grid-template-columns: 96px 1fr 44px; } }
+  .mi-row .lbl { font-size: 13px; color: var(--text); }
+  .mi-track { position: relative; height: 10px; border-radius: 6px; background: rgba(255,255,255,0.07); overflow: hidden; }
+  .mi-fill { position: absolute; inset: 0 auto 0 0; width: 0; border-radius: 6px; background: var(--grad-cool); transition: width 1.1s cubic-bezier(.2,.8,.2,1); }
+  .mi-row.control .mi-fill { background: linear-gradient(90deg, rgba(120,124,146,0.4), var(--faint)); }
+  .mi-row .val { font-family: var(--mono); font-size: 12px; color: var(--ink); text-align: right; }
+  .noise { position: absolute; top: -4px; bottom: -4px; width: 0; border-left: 1px dashed var(--crit); }
+
+  /* chart */
+  .chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  @media (max-width: 940px){ .chart-grid { grid-template-columns: 1fr; } }
+  #ring { width: 100%; aspect-ratio: 1/1; display: block; }
+  table.pos { width: 100%; border-collapse: collapse; font-size: 13px; }
+  table.pos th { text-align: left; font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 600; padding: 6px 8px; border-bottom: 1px solid var(--line); }
+  table.pos td { padding: 7px 8px; border-bottom: 1px solid var(--line); color: var(--text); font-variant-numeric: tabular-nums; }
+  table.pos td.p { color: var(--ink); font-weight: 600; }
+  .sw { display: inline-block; width: 9px; height: 9px; border-radius: 3px; margin-right: 8px; }
 
   /* dasha */
-  .dasha { display:flex; width:100%; border-radius: var(--r); overflow:hidden; border: 1px solid var(--line-2); }
-  .dseg { position: relative; padding: 16px 10px 14px; border-right: 1px solid rgba(8,6,15,0.6); display:flex; flex-direction: column; gap: 3px; min-width: 0; }
+  .dasha { display: flex; width: 100%; border-radius: var(--r-sm); overflow: hidden; border: 1px solid var(--panel-brd-2); }
+  .dseg { position: relative; padding: 15px 10px 13px; border-right: 1px solid var(--line); display: flex; flex-direction: column; gap: 3px; min-width: 0; }
   .dseg:last-child { border-right: 0; }
-  .dseg .dev { font-family: var(--deva); font-size: 16px; color: var(--ink); }
-  .dseg .en { font-family: var(--mono); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.6); }
-  .dseg .yr { font-family: var(--mono); font-size: 10px; color: rgba(255,255,255,0.55); font-variant-numeric: tabular-nums; }
-  .dseg.now { outline: 2px solid var(--gold); outline-offset: -2px; }
-  .dseg.now::after { content:"NOW"; position:absolute; top:6px; right:7px; font-family: var(--mono); font-size: 8px; letter-spacing: 0.1em;
-    color: var(--void); background: var(--gold); padding: 2px 6px; border-radius: 999px; }
-  .dasha-axis { display:flex; justify-content: space-between; margin-top: 8px; font-family: var(--mono); font-size: 11px; color: var(--muted); }
+  .dseg .l { font-size: 14px; color: var(--ink); font-weight: 600; }
+  .dseg .y { font-family: var(--mono); font-size: 10px; color: var(--muted); }
+  .dseg.now { outline: 2px solid var(--accent); outline-offset: -2px; }
+  .dseg.now::after { content: "NOW"; position: absolute; top: 6px; right: 7px; font-family: var(--mono); font-size: 8px; letter-spacing: 0.08em; color: #fff; background: var(--accent); padding: 2px 6px; border-radius: 999px; }
 
-  .lattice { display:grid; grid-template-columns: repeat(auto-fill, minmax(148px,1fr)); gap: 8px; }
-  .dom { border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; background: rgba(18,10,40,0.4); transition: border-color .2s, transform .2s; }
-  .dom:hover { border-color: var(--line-2); transform: translateY(-2px); }
-  .dom .n { font-family: var(--mono); font-size: 10px; color: var(--gold); }
+  /* lattice */
+  .lattice { display: grid; grid-template-columns: repeat(auto-fill, minmax(146px, 1fr)); gap: 8px; }
+  .dom { padding: 11px 13px; border-radius: var(--r-sm); border: 1px solid var(--line); background: var(--panel); }
+  .dom .n { font-family: var(--mono); font-size: 10px; color: var(--accent); }
   .dom .t { font-size: 12.5px; color: var(--text); margin-top: 3px; }
-  .dom.done { background: rgba(91,214,232,0.06); border-color: rgba(91,214,232,0.28); }
-  .dom.done .n { color: var(--cyan); }
+  .dom.done { border-color: rgba(46,230,166,0.32); background: rgba(46,230,166,0.06); }
+  .dom.done .n { color: var(--good); }
 
-  footer { border-top: 1px solid var(--line); padding: 44px 0 60px; }
-  .disclaimer { border: 1px solid var(--line-2); border-radius: var(--r); padding: 22px 24px;
-    background: rgba(229,67,59,0.05); font-size: 14px; color: var(--text); max-width: 78ch; }
-  .disclaimer b { color: var(--gold); }
-  .foot-meta { display:flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-top: 28px;
-    font-family: var(--mono); font-size: 11.5px; color: var(--faint); letter-spacing: 0.04em; }
+  footer { padding: 48px 0 68px; }
+  .disc { padding: 22px 24px; font-size: 14px; color: var(--text); }
+  .disc b { color: var(--ink); }
+  .foot { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-top: 22px; font-family: var(--mono); font-size: 11.5px; color: var(--faint); }
 
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
-    .scrollcue::after { animation: none; }
-    .mi-fill, .wf-bar { transition: none; }
+    .live .d { animation: none; }
+    .fill, .wf-bar, .mi-fill, .tmeter i { transition: none !important; }
   }
 </style>
 
 <header>
   <div class="wrap bar">
-    <div class="brand"><span class="dev">कालचक्र</span><span class="lat">Kalachakra</span></div>
+    <div class="brand"><span class="mark"></span> Kalachakra</div>
     <nav class="links">
+      <a href="#next">What's Next</a>
       <a href="#pipeline">Pipeline</a>
-      <a href="#aggregate">Aggregation</a>
-      <a href="#signal">Signal Gate</a>
-      <a href="#dasha">Timing</a>
-      <a href="#lattice">50 Domains</a>
+      <a href="#signal">Signal</a>
+      <a href="#chart">Chart</a>
+      <a href="#domains">Domains</a>
     </nav>
+    <span class="live"><span class="d"></span>50 domains online</span>
   </div>
 </header>
 
 <main>
   <!-- HERO -->
-  <section class="hero" id="wheel">
-    <canvas id="chakra" aria-label="A black hole whose accretion disk forms the Vedic wheel of time, with the nine grahas orbiting at their computed sidereal longitudes."></canvas>
-    <div class="hero-veil"></div>
-    <div class="hero-copy">
-      <span class="eyebrow">Fifty-Domain Future-Prediction Pipeline</span>
-      <h1 class="title">कालचक्र<span class="roman">one forecast, summed from fifty domains</span></h1>
-      <p class="lede">Birth data enters as one signal among many. Fifty computational domains — astronomy, machine learning, causal inference, uncertainty — each emit a graded signal. A gated, weighted ensemble <b>sums them into a single calibrated probability</b> with a timing window, and only trusts it when it beats the baselines.</p>
-      <div class="chips">
-        <span class="chip">input · <b>Δ Delhi 1990-03-15 10:30 IST</b></span>
-        <span class="chip">horizon · <b>36 months</b></span>
-        <span class="chip">forecast · <b>P = 0.71 · [0.58–0.82]</b></span>
-        <span class="chip">window · <b>Śani daśā</b></span>
+  <section class="hero">
+    <div class="wrap">
+      <span class="eyebrow">50-Domain Future-Prediction Engine</span>
+      <h1>What happens<br /><span class="grad-text">next.</span></h1>
+      <p class="sub">Your birth chart is one signal among fifty. Every computational domain emits a graded score; a mutual-information-gated, weighted ensemble <b>sums them into one calibrated probability</b> with a timing window — and only trusts it when it beats the baselines.</p>
+      <div class="hero-chips">
+        <span class="hchip">Subject · <b>Vadodara, India</b></span>
+        <span class="hchip">Born · <b>13 Nov 2002 · 12:37 IST</b></span>
+        <span class="hchip">Ascendant · <b>Capricorn</b></span>
+        <span class="hchip">Period · <b>Jupiter → 2028</b></span>
+      </div>
+
+      <div class="hero-main">
+        <div class="panel fc">
+          <div class="top"><span class="label">Headline forecast · next major transition</span><span class="badge">Illustrative</span></div>
+          <div class="bignum grad-text" id="bignum">0.71</div>
+          <div class="ci mono">80% CI 0.58 – 0.82 &nbsp;·&nbsp; baseline 0.60</div>
+          <div class="meter"><div class="fill" id="hfill"></div><div class="base" style="left:60%"></div></div>
+          <div class="fc-rows">
+            <div class="fc-cell"><div class="k">Likely window</div><div class="v">2026–2028 <small>Jupiter</small></div></div>
+            <div class="fc-cell"><div class="k">vs baseline</div><div class="v">+0.11 <small>XGBoost</small></div></div>
+            <div class="fc-cell"><div class="k">MI gate</div><div class="v"><span class="pill ok">4 / 6 passed</span></div></div>
+            <div class="fc-cell"><div class="k">Significance</div><div class="v"><span class="pill warn">needs data</span></div></div>
+          </div>
+        </div>
+
+        <div class="panel flow">
+          <span class="label">The pipeline · five stages</span>
+          <div class="layers" id="layers"></div>
+          <div class="agg">
+            <span class="f">P = <span class="op">σ</span>( b <span class="op">+</span> Σ gate·w·s )</span>
+            <span class="s" id="aggsum">z = 0.90 → 0.71</span>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="scrollcue">scroll · the pipeline</div>
   </section>
 
-  <!-- PIPELINE -->
-  <section class="band" id="pipeline">
+  <!-- WHAT'S NEXT -->
+  <section class="band" id="next">
     <div class="wrap">
       <div class="sec-head">
-        <span class="eyebrow">The Pipeline</span>
-        <h2>From birth data to one probability, in five stages.</h2>
-        <p>Astrology is one knowledge source feeding the encoders — never the arbiter. Every domain is measured, gated, weighted, and only then summed. The mutual-information gate can silence any domain, including the astrological ones, to zero contribution.</p>
+        <span class="eyebrow">What's Next</span>
+        <h2>Five domains, forecast forward.</h2>
+        <p>Each life area gets its own calibrated probability of a significant event inside the horizon, with the timing window read from your dasha. Values are illustrative until your dated life-event timeline trains and calibrates the model.</p>
       </div>
-
-      <div class="panel flow">
-        <div>
-          <div class="stage-label">1 · Input</div>
-          <div class="input-bar">
-            <div class="field"><span class="k">Birth</span><span class="v">1990-03-15 · 10:30 IST</span></div>
-            <div class="field"><span class="k">Place</span><span class="v">New Delhi · 28.6°N 77.2°E</span></div>
-            <div class="field"><span class="k">Target event</span><span class="v">career change</span></div>
-            <div class="field"><span class="k">Horizon</span><span class="v">36 months</span></div>
-            <div class="field"><span class="k">Ayanāṁśa</span><span class="v"><span class="dev">लाहिरी</span> Lahiri</span></div>
-          </div>
-        </div>
-        <div class="flowarrow">▾</div>
-        <div>
-          <div class="stage-label">2 · Encode &nbsp;·&nbsp; 3 · Fifty domains emit signals &nbsp;·&nbsp; 4 · MI gate</div>
-          <div class="layers" id="layers"></div>
-        </div>
-        <div class="flowarrow">▾</div>
-        <div>
-          <div class="stage-label">5 · Aggregate — the proper sum</div>
-          <div class="agg-node">
-            <div class="agg-formula">P = <span class="op">σ</span>( b <span class="op">+</span> Σ<sub>d</sub> gate<sub>d</sub>·w<sub>d</sub>·s<sub>d</sub> )</div>
-            <div class="agg-sum" id="aggsum">z = 0.90 &nbsp;→&nbsp; P = 0.71</div>
-          </div>
-        </div>
-        <div class="flowarrow">▾</div>
-        <div>
-          <div class="stage-label">Output · calibrated forecast</div>
-          <div class="forecast">
-            <div class="gauge-wrap" id="gauge"></div>
-            <div class="fc-meta">
-              <div class="fc-line"><span class="k">Calibrated probability</span><span class="v">0.71 <small>· 80% CI [0.58 – 0.82]</small></span></div>
-              <div class="fc-line"><span class="k">Most-likely window</span><span class="v">2026 – 2028 <small>· Śani mahādaśā</small></span></div>
-              <div class="fc-line"><span class="k">vs baseline (XGBoost)</span><span class="v">+0.11 <small>· p₀ = 0.60</small></span></div>
-              <div class="fc-line"><span class="k">MI gate</span><span class="v"><span class="pill ok">4 / 6 layers passed</span></span></div>
-              <div class="fc-line"><span class="k">Significance</span><span class="v"><span class="pill warn">pending · needs n≥2k</span></span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <p class="note" style="margin-top:14px">Illustrative values shown for interface design. Weights <code>w<sub>d</sub></code> are learned by out-of-sample skill (stacked generalization); <code>gate<sub>d</sub></code> is 1 only if the domain's mutual information clears the noise floor; <code>σ</code> is the calibrated (isotonic) link. The pipeline is engineered to be strong; the reported <em>effect size</em> stays honest until the full dataset is in.</p>
+      <div class="targets" id="targets"></div>
     </div>
   </section>
 
-  <!-- AGGREGATION -->
-  <section class="band" id="aggregate">
+  <!-- PIPELINE / AGGREGATION -->
+  <section class="band" id="pipeline">
     <div class="wrap">
       <div class="sec-head">
         <span class="eyebrow">The Proper Sum</span>
         <h2>How fifty domains become one number.</h2>
-        <p>Probabilities do not add — log-odds do. Each layer contributes a signed nudge to the log-odds, which sum onto a baseline prior and pass through calibration. Positive (cyan) pushes the event more likely; negative (vermilion) is a domain that <em>reduces</em> confidence — uncertainty and rigor are allowed to subtract.</p>
+        <p>Probabilities don't add — log-odds do. Each layer contributes a signed, gated, weighted nudge; these sum onto a baseline prior and pass through calibration. A negative layer (uncertainty, rigor) is allowed to subtract confidence.</p>
       </div>
       <div class="two">
-        <div class="panel">
-          <div class="panel-head"><h3>Per-layer contribution to log-odds</h3><span class="badge">Illustrative</span></div>
-          <p class="note">Δz per layer (gated · weighted). They sum onto the baseline log-odds b.</p>
+        <div class="panel card">
+          <div class="cap"><h3>Per-layer contribution to log-odds</h3><span class="badge">Illustrative</span></div>
+          <p class="note">Δz per layer, gated and weighted, summed onto baseline b.</p>
           <div class="wf" id="wf"></div>
-          <div class="wf-total"><span>baseline b = +0.41 &nbsp;(p₀ = 0.60)</span><span id="wftotal">Σ Δz = +0.49 → z = 0.90</span></div>
+          <div class="wf-total"><span>baseline b = +0.41 (p₀ 0.60)</span><span>Σ Δz = +0.49 → z = 0.90</span></div>
         </div>
-        <div class="panel">
-          <div class="panel-head"><h3>Signal gate — mutual information</h3><span class="badge">Domain 25</span></div>
-          <p class="note">Bits between each feature family and the target, vs a shuffled-control noise floor. Below the floor ⇒ gated to zero, whatever a model claims.</p>
+        <div class="panel card" id="signal">
+          <div class="cap"><h3>Signal gate — mutual information</h3><span class="badge">Domain 25</span></div>
+          <p class="note">Bits between each feature family and the target vs a shuffled-control floor. Below the floor → gated to zero.</p>
           <div class="mi" id="mi"></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- TIMING / DASHA -->
-  <section class="band" id="dasha">
+  <!-- CHART -->
+  <section class="band" id="chart">
     <div class="wrap">
       <div class="sec-head">
-        <span class="eyebrow">The "When" · Domain 2</span>
-        <h2>The timing window is read off the wheel.</h2>
-        <p>The aggregator answers "how likely"; the Vimśottarī daśā answers "when". Computed deterministically from the Moon's nakshatra — real engine output. In 2026 the wheel stands in Śani, which frames the forecast window above.</p>
+        <span class="eyebrow">The Input · Domain 2</span>
+        <h2>Your birth chart, computed.</h2>
+        <p>Real sidereal positions from the Swiss Ephemeris engine (Lahiri ayanamsha), 13 Nov 2002 · 12:37 IST · Vadodara. The encoder's input — gated like every other signal.</p>
       </div>
-      <div class="dasha" id="dashaEl"></div>
-      <div class="dasha-axis"><span>1990</span><span>2035</span><span>2102</span></div>
+      <div class="chart-grid">
+        <div class="panel card"><canvas id="ring" aria-label="Birth chart ring: nine planets at their sidereal longitudes."></canvas></div>
+        <div class="panel card" style="overflow-x:auto">
+          <div class="cap"><h3>Planetary positions</h3><span class="badge">Sidereal</span></div>
+          <table class="pos"><thead><tr><th>Planet</th><th>Longitude</th><th>Sign</th><th>Nakshatra</th><th>Hs</th></tr></thead><tbody id="postable"></tbody></table>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- LATTICE -->
-  <section class="band" id="lattice">
+  <!-- TIMING -->
+  <section class="band">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">The "When" · Domain 2</span>
+        <h2>Timing comes from the dasha wheel.</h2>
+        <p>The aggregator answers "how likely"; the Vimshottari period system answers "when" — computed deterministically from the Moon's nakshatra. This chart opened in Rahu and now stands in Jupiter (2012–2028).</p>
+      </div>
+      <div class="dasha" id="dasha"></div>
+    </div>
+  </section>
+
+  <!-- DOMAINS -->
+  <section class="band" id="domains">
     <div class="wrap">
       <div class="sec-head">
         <span class="eyebrow">The Stages</span>
         <h2>Fifty domains, one falsifiable question.</h2>
-        <p>Each domain is a stage in the pipeline, not decoration. Foundations are built and validated first; higher domains earn their weight only if they add out-of-sample skill. Lit tiles are shipped and tested.</p>
+        <p>Each domain is a pipeline stage. Foundations are built and validated first; higher domains earn their weight only if they add out-of-sample skill. Green tiles are shipped and tested.</p>
       </div>
-      <div class="lattice" id="latticeEl"></div>
+      <div class="lattice" id="lattice"></div>
     </div>
   </section>
 
   <footer>
     <div class="wrap">
-      <div class="disclaimer">
-        <b>Scientific disclaimer.</b> This is a research instrument, not an oracle. It does not provide deterministic predictions or claims about individual fate. It estimates whether specific mathematical encodings of astronomical configurations carry statistically detectable predictive information, and reports every forecast with calibrated uncertainty and a comparison against strong baselines. H₀ — that these features add nothing — stands until the data rejects it.
+      <div class="panel disc">
+        <b>Scientific disclaimer.</b> A research instrument, not an oracle. It estimates whether specific mathematical encodings of astronomical configurations carry statistically detectable predictive information, and reports every forecast with calibrated uncertainty against strong baselines. H₀ — that these features add nothing — stands until the data rejects it. A single chart is a demonstration; forecasting accuracy requires a dataset and a dated event timeline.
       </div>
-      <div class="foot-meta">
-        <span>कालचक्र · Kalachakra</span>
+      <div class="foot">
+        <span>Kalachakra · 50-domain prediction pipeline</span>
         <span>MI-gated weighted ensemble · isotonic calibration</span>
-        <span>strong pipeline, honest effect size</span>
+        <span>H₀ until the data says otherwise</span>
       </div>
     </div>
   </footer>
@@ -351,157 +363,127 @@
   "use strict";
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  /* real chart data (Vadodara 2002-11-13 12:37 IST, Lahiri sidereal) */
   var GRAHAS = [
-    { dev:"सूर्य", lon:330.63, color:"#ffcf5a", retro:false }, { dev:"चन्द्र", lon:192.55, color:"#e7e2f5", retro:false },
-    { dev:"मङ्गल", lon:278.90, color:"#e5433b", retro:false }, { dev:"बुध", lon:326.94, color:"#8fe38f", retro:false },
-    { dev:"गुरु", lon:67.64, color:"#ff9a3d", retro:false }, { dev:"शुक्र", lon:285.16, color:"#8fd8ff", retro:false },
-    { dev:"शनि", lon:269.59, color:"#9c8bd6", retro:false }, { dev:"राहु", lon:290.86, color:"#b98cff", retro:true },
-    { dev:"केतु", lon:110.86, color:"#c8a0ff", retro:true }
+    { short:"Su", en:"Sun",     lon:206.83, sign:"Libra",    nak:"Vishakha",    house:10, retro:false, color:"#f5a524" },
+    { short:"Mo", en:"Moon",    lon:312.91, sign:"Aquarius", nak:"Shatabhisha", house:2,  retro:false, color:"#38bdf8" },
+    { short:"Ma", en:"Mars",    lon:174.36, sign:"Virgo",    nak:"Chitra",      house:9,  retro:false, color:"#ff5c6a" },
+    { short:"Me", en:"Mercury", lon:206.30, sign:"Libra",    nak:"Vishakha",    house:10, retro:false, color:"#2ee6a6" },
+    { short:"Ju", en:"Jupiter", lon:113.49, sign:"Cancer",   nak:"Ashlesha",    house:7,  retro:false, color:"#ffb020" },
+    { short:"Ve", en:"Venus",   lon:187.48, sign:"Libra",    nak:"Swati",       house:10, retro:true,  color:"#ff5ca8" },
+    { short:"Sa", en:"Saturn",  lon:64.23,  sign:"Gemini",   nak:"Mrigashira",  house:6,  retro:true,  color:"#b45cff" },
+    { short:"Ra", en:"Rahu",    lon:45.72,  sign:"Taurus",   nak:"Rohini",      house:5,  retro:true,  color:"#8b7bff" },
+    { short:"Ke", en:"Ketu",    lon:225.72, sign:"Scorpio",  nak:"Anuradha",    house:11, retro:true,  color:"#6d6bff" }
   ];
-  var RASHIS = ["Me","Vr","Mi","Ka","Si","Kn","Tu","Vc","Dh","Mk","Km","Mn"];
+  var ASC = 288.56, SIGNS = ["Ar","Ta","Ge","Cn","Le","Vi","Li","Sc","Sg","Cp","Aq","Pi"];
 
-  // ---------- black-hole Kalachakra ----------
-  var canvas = document.getElementById("chakra"), ctx = canvas.getContext("2d");
-  var W=0,H=0,DPR=1,cx=0,cy=0,R=60,TILT=0.40;
-  function resize(){ DPR=Math.min(window.devicePixelRatio||1,2); var r=canvas.getBoundingClientRect();
-    W=Math.max(320,r.width); H=Math.max(360,r.height); canvas.width=(W*DPR)|0; canvas.height=(H*DPR)|0;
-    ctx.setTransform(DPR,0,0,DPR,0,0); cx=W/2; cy=H/2; R=Math.max(44,Math.min(W,H)*0.135); }
-  function d2r(d){ return d*Math.PI/180; }
-  function lonA(l,s){ return Math.PI - d2r(l) + s; }
-  function disk(spin){ var rIn=R*1.16,rOut=R*2.4; ctx.save(); ctx.translate(cx,cy); ctx.scale(1,TILT);
-    var N=200; for(var i=0;i<N;i++){ var a0=(i/N)*Math.PI*2,a1=((i+1.4)/N)*Math.PI*2;
-      var beam=Math.cos(a0-Math.PI), turb=0.5+0.5*Math.sin(a0*7+spin*6)*Math.sin(a0*3-spin*4);
-      var b=Math.max(0.05,(0.32+0.68*(beam*0.5+0.5)))*(0.55+0.45*turb);
-      var g=ctx.createRadialGradient(0,0,rIn,0,0,rOut);
-      if(beam<0){ g.addColorStop(0,"rgba(255,232,180,"+b+")"); g.addColorStop(0.4,"rgba(255,138,61,"+b*0.9+")"); g.addColorStop(1,"rgba(229,67,59,0)"); }
-      else { g.addColorStop(0,"rgba(232,255,255,"+b+")"); g.addColorStop(0.4,"rgba(91,214,232,"+b*0.85+")"); g.addColorStop(1,"rgba(120,90,220,0)"); }
-      ctx.beginPath(); ctx.arc(0,0,rOut,a0,a1); ctx.arc(0,0,rIn,a1,a0,true); ctx.closePath(); ctx.fillStyle=g; ctx.fill(); }
-    ctx.restore(); }
-  function photon(){ ctx.save(); ctx.translate(cx,cy); var g=ctx.createRadialGradient(0,0,R*0.9,0,0,R*1.5);
-    g.addColorStop(0,"rgba(0,0,0,0)"); g.addColorStop(0.62,"rgba(255,180,90,0)"); g.addColorStop(0.74,"rgba(255,206,120,0.55)");
-    g.addColorStop(0.80,"rgba(255,240,210,0.9)"); g.addColorStop(0.86,"rgba(255,206,120,0.35)"); g.addColorStop(1,"rgba(255,180,90,0)");
-    ctx.beginPath(); ctx.arc(0,0,R*1.5,0,Math.PI*2); ctx.fillStyle=g; ctx.fill(); ctx.restore(); }
-  function horizon(){ ctx.save(); ctx.translate(cx,cy); var g=ctx.createRadialGradient(0,0,R*0.2,0,0,R*1.08);
-    g.addColorStop(0,"#000"); g.addColorStop(0.82,"#000"); g.addColorStop(1,"rgba(4,3,10,0.2)");
-    ctx.beginPath(); ctx.arc(0,0,R*1.02,0,Math.PI*2); ctx.fillStyle=g; ctx.fill(); ctx.restore(); }
-  function zodiac(spin){ var rMid=R*2.82,rIn=R*2.62,rOut=R*2.98; ctx.save(); ctx.translate(cx,cy);
-    for(var s=0;s<12;s++){ var a0=lonA(s*30,spin),a1=lonA((s+1)*30,spin);
-      ctx.beginPath(); ctx.arc(0,0,rOut,a1,a0,true); ctx.arc(0,0,rIn,a0,a1,false); ctx.closePath();
-      ctx.fillStyle=(s%2===0)?"rgba(178,160,232,0.045)":"rgba(232,178,76,0.03)"; ctx.fill();
-      ctx.beginPath(); ctx.moveTo(rIn*Math.cos(a0),rIn*Math.sin(a0)); ctx.lineTo(rOut*Math.cos(a0),rOut*Math.sin(a0));
-      ctx.strokeStyle="rgba(232,178,76,0.3)"; ctx.lineWidth=1; ctx.stroke();
-      var am=lonA(s*30+15,spin); ctx.save(); ctx.translate(rMid*Math.cos(am),rMid*Math.sin(am));
-      ctx.fillStyle="rgba(201,192,217,0.62)"; ctx.font="600 11px ui-monospace,Menlo,monospace"; ctx.textAlign="center"; ctx.textBaseline="middle";
-      ctx.fillText(RASHIS[s],0,0); ctx.restore(); }
-    ctx.beginPath(); ctx.arc(0,0,rIn,0,Math.PI*2); ctx.strokeStyle="rgba(232,178,76,0.26)"; ctx.lineWidth=1; ctx.stroke();
-    for(var n=0;n<27;n++){ var at=lonA(n*(360/27),spin),t0=rIn-5,t1=rIn-(n%3===0?12:6);
-      ctx.beginPath(); ctx.moveTo(t0*Math.cos(at),t0*Math.sin(at)); ctx.lineTo(t1*Math.cos(at),t1*Math.sin(at));
-      ctx.strokeStyle="rgba(91,214,232,0.2)"; ctx.lineWidth=1; ctx.stroke(); }
-    ctx.restore(); }
-  function grahaRing(spin){ var rG=R*2.12; ctx.save(); ctx.translate(cx,cy);
-    ctx.beginPath(); ctx.arc(0,0,rG,0,Math.PI*2); ctx.strokeStyle="rgba(178,160,232,0.14)"; ctx.lineWidth=1; ctx.stroke();
-    for(var i=0;i<GRAHAS.length;i++){ var p=GRAHAS[i],a=lonA(p.lon,spin),x=rG*Math.cos(a),y=rG*Math.sin(a);
-      ctx.beginPath(); ctx.moveTo(R*1.08*Math.cos(a),R*1.08*Math.sin(a)); ctx.lineTo(x,y); ctx.strokeStyle="rgba(178,160,232,0.1)"; ctx.lineWidth=1; ctx.stroke();
-      ctx.beginPath(); ctx.arc(x,y,4.2,0,Math.PI*2); ctx.shadowColor=p.color; ctx.shadowBlur=16; ctx.fillStyle=p.color; ctx.fill(); ctx.shadowBlur=0;
-      if(p.retro){ ctx.beginPath(); ctx.arc(x,y,8,0,Math.PI*2); ctx.strokeStyle=p.color; ctx.globalAlpha=0.5; ctx.setLineDash([2,3]); ctx.lineWidth=1; ctx.stroke(); ctx.setLineDash([]); ctx.globalAlpha=1; }
-      var lr=R*2.28,lx=lr*Math.cos(a),ly=lr*Math.sin(a); ctx.save(); ctx.fillStyle="rgba(239,234,250,0.92)";
-      ctx.font="16px 'Devanagari Sangam MN','Noto Sans Devanagari',serif";
-      ctx.textAlign=Math.cos(a)<-0.15?"end":(Math.cos(a)>0.15?"start":"center"); ctx.textBaseline="middle"; ctx.fillText(p.dev,lx,ly); ctx.restore(); }
-    ctx.restore(); }
-  var t0=performance.now();
-  function frame(now){ var t=(now-t0)/1000, ls=reduce?0.6:t*(Math.PI*2)/120, ds=reduce?0:t*0.35;
-    ctx.clearRect(0,0,W,H); try{ disk(ds); photon(); horizon(); zodiac(ls); grahaRing(ls); }catch(e){}
-    if(!reduce) requestAnimationFrame(frame); }
-  window.addEventListener("resize", function(){ resize(); if(reduce) frame(performance.now()); });
-  resize(); reduce?frame(performance.now()):requestAnimationFrame(frame);
+  /* what's next targets (illustrative) */
+  var TARGETS = [
+    { ico:"💼", name:"Career & Work", p:0.71, win:"2026–2028", note:"Jupiter", c:"#6d6bff" },
+    { ico:"📈", name:"Finance", p:0.58, win:"2027", note:"Jupiter→Saturn", c:"#2ee6a6" },
+    { ico:"❤️", name:"Relationships", p:0.64, win:"2026–2027", note:"Venus dasa-antara", c:"#ff5ca8" },
+    { ico:"✈️", name:"Relocation & Education", p:0.49, win:"2026", note:"9th-lord transit", c:"#34e3ff" },
+    { ico:"🩺", name:"Health", p:0.28, win:"monitor", note:"6th/8th activity", c:"#ffb020" }
+  ];
+  var tEl = document.getElementById("targets");
+  TARGETS.forEach(function(t){
+    var el = document.createElement("div"); el.className = "panel tcard";
+    el.innerHTML = '<div class="ico">'+t.ico+'</div><div class="tname">'+t.name+'</div>'+
+      '<div class="tp">'+t.p.toFixed(2)+'<small>prob</small></div>'+
+      '<div class="tmeter"><i style="background:'+t.c+'"></i></div>'+
+      '<div class="twin">window <b>'+t.win+'</b> · '+t.note+'</div>';
+    tEl.appendChild(el);
+    var bar = el.querySelector(".tmeter i");
+    requestAnimationFrame(function(){ setTimeout(function(){ bar.style.width = Math.round(t.p*100)+"%"; }, 150); });
+  });
 
-  // ---------- pipeline layers ----------
+  /* hero meter */
+  requestAnimationFrame(function(){ setTimeout(function(){ var f=document.getElementById("hfill"); if(f) f.style.width="71%"; }, 200); });
+
+  /* pipeline layers */
   var LAYERS = [
-    { n:"L1", name:"Foundation & Features", cnt:"8 dom", gate:true,  dz:+0.30 },
-    { n:"L2", name:"Predictive Core", cnt:"10 dom", gate:true,  dz:+0.24 },
-    { n:"L3", name:"Reasoning & Causality", cnt:"8 dom", gate:true,  dz:+0.10 },
-    { n:"L4", name:"Interpretation & Uncertainty", cnt:"6 dom", gate:true, dz:-0.08 },
-    { n:"L5", name:"Meta & Optimization", cnt:"10 dom", gate:false, dz:+0.06 },
-    { n:"L6", name:"Rigor & Aggregation", cnt:"9 dom", gate:false, dz:-0.13 }
+    { id:"L1", name:"Foundation & Features", cnt:"8 dom", gate:true,  dz:0.30 },
+    { id:"L2", name:"Predictive Core", cnt:"10 dom", gate:true,  dz:0.24 },
+    { id:"L3", name:"Reasoning & Causality", cnt:"8 dom", gate:true,  dz:0.10 },
+    { id:"L4", name:"Interpretation & Uncertainty", cnt:"6 dom", gate:true,  dz:-0.08 },
+    { id:"L5", name:"Meta & Optimization", cnt:"10 dom", gate:false, dz:0.06 },
+    { id:"L6", name:"Rigor & Aggregation", cnt:"9 dom", gate:false, dz:-0.13 }
   ];
-  var layEl = document.getElementById("layers");
+  var lay = document.getElementById("layers");
   LAYERS.forEach(function(L){
-    var sign = L.dz>0.001?"pos":(L.dz<-0.001?"neg":"zero");
-    var el=document.createElement("div"); el.className="layer";
-    el.innerHTML =
-      '<div class="cap"><span class="n">'+L.n+'</span><span class="cnt">'+L.cnt+'</span></div>'+
-      '<div class="name">'+L.name+'</div>'+
-      '<div class="gate"><span class="dot '+(L.gate?"pass":"gated")+'"></span>'+(L.gate?'MI pass':'gated')+'</div>'+
-      '<div class="contrib '+sign+'">Δz '+(L.dz>=0?"+":"")+L.dz.toFixed(2)+'</div>';
-    layEl.appendChild(el);
+    var pos = L.dz >= 0, el = document.createElement("div"); el.className = "layer";
+    el.innerHTML = '<div class="top"><span class="lid">'+L.id+'</span><span class="cnt">'+L.cnt+'</span></div>'+
+      '<div class="lname">'+L.name+'</div><div class="row"><span class="gate"><span class="dot '+(L.gate?"pass":"gated")+'"></span>'+(L.gate?"pass":"gated")+'</span><span class="dz '+(pos?"pos":"neg")+'">'+(pos?"+":"")+L.dz.toFixed(2)+'</span></div>';
+    lay.appendChild(el);
   });
 
-  // ---------- waterfall ----------
-  var wfEl=document.getElementById("wf"); var maxAbs=0.32;
+  /* waterfall */
+  var wf = document.getElementById("wf"), maxAbs = 0.32;
   LAYERS.forEach(function(L){
-    var row=document.createElement("div"); row.className="wf-row";
-    row.innerHTML='<div class="lbl">'+L.name+'</div><div class="wf-track"><div class="axis"></div><div class="wf-bar '+(L.dz>=0?"pos":"neg")+'"></div></div><div class="val '+(L.dz>=0?"pos":"neg")+'">'+(L.dz>=0?"+":"")+L.dz.toFixed(2)+'</div>';
-    wfEl.appendChild(row);
-    var bar=row.querySelector(".wf-bar"); var w=Math.min(50,50*Math.abs(L.dz)/maxAbs);
-    requestAnimationFrame(function(){ setTimeout(function(){
-      if(L.dz>=0){ bar.style.left="50%"; bar.style.width=w+"%"; } else { bar.style.left=(50-w)+"%"; bar.style.width=w+"%"; }
-    },100); });
+    var pos = L.dz >= 0, w = Math.min(50, 50*Math.abs(L.dz)/maxAbs);
+    var row = document.createElement("div"); row.className = "wf-row";
+    row.innerHTML = '<div class="lbl">'+L.name+'</div><div class="wf-track"><div class="axis"></div><div class="wf-bar '+(pos?"pos":"neg")+'"></div></div><div class="val '+(pos?"pos":"neg")+'">'+(pos?"+":"")+L.dz.toFixed(2)+'</div>';
+    wf.appendChild(row);
+    var bar = row.querySelector(".wf-bar");
+    requestAnimationFrame(function(){ setTimeout(function(){ if(pos){bar.style.left="50%";bar.style.width=w+"%";}else{bar.style.left=(50-w)+"%";bar.style.width=w+"%";} }, 140); });
   });
 
-  // ---------- MI gate ----------
-  var MI=[
-    {dev:"नक्षत्र", en:"Moon nakshatra", bits:0.041},
-    {dev:"दशा स्वामी", en:"Dasha lord", bits:0.034},
-    {dev:"लग्न", en:"Ascendant sign", bits:0.027},
-    {dev:"वक्री", en:"Retrograde count", bits:0.014},
-    {dev:"शनि भाव", en:"Saturn house", bits:0.009},
-    {dev:"यादृच्छिक", en:"shuffled control", bits:0.003, control:true}
+  /* mi */
+  var MI = [
+    { en:"Moon nakshatra", bits:0.041 }, { en:"Dasha lord", bits:0.034 }, { en:"Ascendant sign", bits:0.027 },
+    { en:"Retrograde count", bits:0.014 }, { en:"Saturn house", bits:0.009 }, { en:"Shuffled control", bits:0.003, control:true }
   ];
-  var NOISE=0.011, mx=0.05, miEl=document.getElementById("mi");
+  var NOISE = 0.011, mx = 0.05, miEl = document.getElementById("mi");
   MI.forEach(function(m){
-    var row=document.createElement("div"); row.className="mi-row"+(m.control?" control":"");
-    row.innerHTML='<div class="lbl"><span style="font-family:var(--deva)">'+m.dev+'</span><span class="en">'+m.en+'</span></div>'+
-      '<div class="mi-track"><div class="mi-fill"></div><div class="noise"></div></div><div class="val">'+m.bits.toFixed(3)+'</div>';
+    var row = document.createElement("div"); row.className = "mi-row"+(m.control?" control":"");
+    row.innerHTML = '<div class="lbl">'+m.en+'</div><div class="mi-track"><div class="mi-fill"></div><div class="noise"></div></div><div class="val">'+m.bits.toFixed(3)+'</div>';
     miEl.appendChild(row);
-    row.querySelector(".noise").style.left=(100*NOISE/mx)+"%";
-    var f=row.querySelector(".mi-fill"); requestAnimationFrame(function(){ setTimeout(function(){ f.style.width=Math.min(100,100*m.bits/mx)+"%"; },120); });
+    row.querySelector(".noise").style.left = (100*NOISE/mx)+"%";
+    var f = row.querySelector(".mi-fill");
+    requestAnimationFrame(function(){ setTimeout(function(){ f.style.width = Math.min(100,100*m.bits/mx)+"%"; }, 160); });
   });
 
-  // ---------- probability gauge ----------
-  (function(){
-    var p=0.71, p0=0.60, lo=0.58, hi=0.82, cxg=130, cyg=124, r=96, sw=16;
-    function pt(v){ var a=Math.PI*(1 - v); return [cxg+r*Math.cos(a), cyg - r*Math.sin(a)]; }
-    function arc(a,b,rad){ var s=Math.PI*(1-a), e=Math.PI*(1-b);
-      return "M "+(cxg+rad*Math.cos(s))+" "+(cyg-rad*Math.sin(s))+" A "+rad+" "+rad+" 0 "+((b-a)>0.5?1:0)+" 1 "+(cxg+rad*Math.cos(e))+" "+(cyg-rad*Math.sin(e)); }
-    var svg='<svg viewBox="0 0 260 150" role="img" aria-label="Calibrated probability gauge showing 0.71 with confidence band.">';
-    svg+='<path d="'+arc(0,1,r)+'" fill="none" stroke="rgba(139,130,166,0.18)" stroke-width="'+sw+'" stroke-linecap="round"/>';
-    svg+='<path d="'+arc(lo,hi,r)+'" fill="none" stroke="rgba(91,214,232,0.22)" stroke-width="'+sw+'" stroke-linecap="butt"/>';
-    svg+='<path d="'+arc(0,p,r)+'" fill="none" stroke="#5bd6e8" stroke-width="'+sw+'" stroke-linecap="round"/>';
-    var b0=pt(p0); svg+='<circle cx="'+b0[0].toFixed(1)+'" cy="'+b0[1].toFixed(1)+'" r="4" fill="#e8b24c"/>';
-    svg+='<text x="130" y="112" text-anchor="middle" fill="#efeafa" font-family="var(--serif)" font-size="46" font-weight="600">0.71</text>';
-    svg+='<text x="130" y="134" text-anchor="middle" fill="#8b82a6" font-family="ui-monospace,Menlo,monospace" font-size="10.5" letter-spacing="1">CALIBRATED P · CI 0.58–0.82</text>';
-    svg+='<text x="'+b0[0].toFixed(1)+'" y="'+(b0[1]-10).toFixed(1)+'" text-anchor="middle" fill="#e8b24c" font-family="ui-monospace,Menlo,monospace" font-size="9">base 0.60</text>';
-    svg+='</svg>';
-    document.getElementById("gauge").innerHTML=svg;
-  })();
+  /* chart ring (dark) */
+  var canvas = document.getElementById("ring"), ctx = canvas.getContext("2d");
+  function drawRing(){
+    var dpr = Math.min(window.devicePixelRatio||1,2), size = canvas.getBoundingClientRect().width||360;
+    canvas.width = size*dpr; canvas.height = size*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
+    var cx=size/2, cy=size/2, R=size*0.42;
+    var ring="rgba(255,255,255,0.1)", tick="rgba(255,255,255,0.22)", label="rgba(182,185,203,0.9)", accent="#6d6bff";
+    ctx.clearRect(0,0,size,size);
+    function ang(l){ return Math.PI - l*Math.PI/180; }
+    [R,R*0.72,R*0.5].forEach(function(rr,i){ ctx.beginPath(); ctx.arc(cx,cy,rr,0,Math.PI*2); ctx.strokeStyle=ring; ctx.lineWidth=i===0?1.5:1; ctx.stroke(); });
+    for(var s=0;s<12;s++){ var a0=ang(s*30);
+      ctx.beginPath(); ctx.moveTo(cx+R*0.72*Math.cos(a0),cy+R*0.72*Math.sin(a0)); ctx.lineTo(cx+R*Math.cos(a0),cy+R*Math.sin(a0)); ctx.strokeStyle=tick; ctx.lineWidth=1; ctx.stroke();
+      var am=ang(s*30+15); ctx.fillStyle=label; ctx.font="600 11px ui-monospace,Menlo,monospace"; ctx.textAlign="center"; ctx.textBaseline="middle";
+      ctx.fillText(SIGNS[s], cx+R*0.86*Math.cos(am), cy+R*0.86*Math.sin(am)); }
+    var aa=ang(ASC); ctx.beginPath(); ctx.moveTo(cx+R*0.5*Math.cos(aa),cy+R*0.5*Math.sin(aa)); ctx.lineTo(cx+R*Math.cos(aa),cy+R*Math.sin(aa)); ctx.strokeStyle=accent; ctx.lineWidth=2; ctx.stroke();
+    ctx.fillStyle=accent; ctx.font="700 10px ui-monospace,Menlo,monospace"; ctx.textAlign="center"; ctx.fillText("ASC", cx+R*1.06*Math.cos(aa), cy+R*1.06*Math.sin(aa));
+    var pr=R*0.61;
+    GRAHAS.forEach(function(p){ var a=ang(p.lon), x=cx+pr*Math.cos(a), y=cy+pr*Math.sin(a);
+      ctx.beginPath(); ctx.arc(x,y,4.5,0,Math.PI*2); ctx.fillStyle=p.color; ctx.shadowColor=p.color; ctx.shadowBlur=12; ctx.fill(); ctx.shadowBlur=0;
+      ctx.fillStyle=label; ctx.font="600 11px "+getComputedStyle(document.body).getPropertyValue('--sans'); ctx.textAlign="center"; ctx.textBaseline="middle";
+      ctx.fillText(p.short+(p.retro?"℞":""), cx+R*0.42*Math.cos(a), cy+R*0.42*Math.sin(a)); });
+  }
+  window.addEventListener("resize", drawRing); drawRing();
 
-  // ---------- dasha ----------
-  var DASHA=[
-    {dev:"राहु",years:10.06,start:1990},{dev:"गुरु",years:16,start:2000},{dev:"शनि",years:19,start:2016,now:true},
-    {dev:"बुध",years:17,start:2035},{dev:"केतु",years:7,start:2052},{dev:"शुक्र",years:20,start:2059},
-    {dev:"सूर्य",years:6,start:2079},{dev:"चन्द्र",years:10,start:2085},{dev:"मङ्गल",years:7,start:2095}
-  ];
-  var lc={"राहु":"#b98cff","गुरु":"#ff9a3d","शनि":"#9c8bd6","बुध":"#8fe38f","केतु":"#c8a0ff","शुक्र":"#8fd8ff","सूर्य":"#ffcf5a","चन्द्र":"#e7e2f5","मङ्गल":"#e5433b"};
-  var en={"राहु":"RAHU","गुरु":"GURU","शनि":"SHANI","बुध":"BUDHA","केतु":"KETU","शुक्र":"SHUKRA","सूर्य":"SURYA","चन्द्र":"CHANDRA","मङ्गल":"MANGALA"};
+  /* positions table */
+  var pt = document.getElementById("postable");
+  GRAHAS.forEach(function(p){ var tr=document.createElement("tr");
+    tr.innerHTML='<td class="p"><span class="sw" style="background:'+p.color+'"></span>'+p.en+(p.retro?' ℞':'')+'</td><td>'+p.lon.toFixed(2)+'°</td><td>'+p.sign+'</td><td>'+p.nak+'</td><td>'+p.house+'</td>';
+    pt.appendChild(tr); });
+
+  /* dasha */
+  var DASHA=[{l:"Rahu",s:2002,y:9.57,c:"#8b7bff"},{l:"Jupiter",s:2012,y:16,c:"#ffb020",now:true},{l:"Saturn",s:2028,y:19,c:"#b45cff"},{l:"Mercury",s:2047,y:17,c:"#2ee6a6"},{l:"Ketu",s:2064,y:7,c:"#6d6bff"},{l:"Venus",s:2071,y:20,c:"#ff5ca8"},{l:"Sun",s:2091,y:6,c:"#f5a524"},{l:"Moon",s:2097,y:10,c:"#38bdf8"},{l:"Mars",s:2107,y:7,c:"#ff5c6a"}];
   function hexA(h,a){ var n=parseInt(h.slice(1),16); return "rgba("+((n>>16)&255)+","+((n>>8)&255)+","+(n&255)+","+a+")"; }
-  var dEl=document.getElementById("dashaEl");
-  DASHA.forEach(function(d){ var seg=document.createElement("div"); seg.className="dseg"+(d.now?" now":"");
-    seg.style.flex=d.years+" 0 0"; var c=lc[d.dev]; seg.style.background="linear-gradient(180deg,"+hexA(c,0.32)+","+hexA(c,0.08)+")";
-    seg.innerHTML='<span class="dev">'+d.dev+'</span><span class="en">'+en[d.dev]+'</span><span class="yr">'+d.start+' · '+d.years+'y</span>'; dEl.appendChild(seg); });
+  var dEl=document.getElementById("dasha");
+  DASHA.forEach(function(d){ var seg=document.createElement("div"); seg.className="dseg"+(d.now?" now":""); seg.style.flex=d.y+" 0 0";
+    seg.style.background="linear-gradient(180deg,"+hexA(d.c,0.24)+","+hexA(d.c,0.05)+")";
+    seg.innerHTML='<span class="l">'+d.l+'</span><span class="y">'+d.s+' · '+d.y+'y</span>'; dEl.appendChild(seg); });
 
-  // ---------- lattice ----------
-  var DOMAINS=[[1,"Mathematics",1],[2,"Astronomy",1],[3,"Features",0],[4,"Classical ML",0],[5,"Deep Learning",0],[6,"Probabilistic AI",0],[7,"Graph AI",0],[8,"Knowledge Graphs",0],[9,"Scientific ML",0],[10,"Time-Series",0],[12,"Causal AI",0],[13,"XAI",0],[14,"Uncertainty",0],[17,"LLM + RAG",0],[19,"Quantum ML",0],[24,"Algorithms",0],[25,"Information Theory",0],[26,"Signal Processing",0],[27,"Dynamical Systems",0],[28,"TDA",0],[29,"Neuro-Symbolic",0],[30,"Foundation Models",0],[31,"Multi-Modal",0],[38,"Synthetic Data",0],[43,"Reproducibility",0],[44,"Benchmarking",0],[45,"Ethical AI",0],[50,"Methodology",0]];
-  var latEl=document.getElementById("latticeEl");
+  /* lattice */
+  var DOMAINS=[[1,"Mathematics",1],[2,"Astronomy",1],[3,"Features",1],[4,"Classical ML",0],[5,"Deep Learning",0],[6,"Probabilistic AI",0],[7,"Graph AI",0],[8,"Knowledge Graphs",0],[9,"Scientific ML",0],[10,"Time-Series",0],[12,"Causal AI",0],[13,"XAI",0],[14,"Uncertainty",0],[17,"LLM + RAG",0],[19,"Quantum ML",0],[24,"Algorithms",0],[25,"Information Theory",0],[26,"Signal Processing",0],[27,"Dynamical Systems",0],[28,"TDA",0],[29,"Neuro-Symbolic",0],[30,"Foundation Models",0],[31,"Multi-Modal",0],[38,"Synthetic Data",0],[43,"Reproducibility",0],[44,"Benchmarking",0],[45,"Ethical AI",0],[50,"Methodology",0]];
+  var latEl=document.getElementById("lattice");
   DOMAINS.forEach(function(d){ var el=document.createElement("div"); el.className="dom"+(d[2]?" done":"");
     el.innerHTML='<div class="n">D'+String(d[0]).padStart(2,"0")+(d[2]?" · shipped":"")+'</div><div class="t">'+d[1]+'</div>'; latEl.appendChild(el); });
 })();

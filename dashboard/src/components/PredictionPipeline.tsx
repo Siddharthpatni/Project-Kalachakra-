@@ -31,7 +31,7 @@ function Gauge({ p, ci, baselineP }: { p: number; ci: [number, number]; baseline
       <path d={arc(ci[0], ci[1])} fill="none" stroke="rgba(91,214,232,0.22)" strokeWidth={sw} />
       <path d={arc(0, p)} fill="none" stroke="#5bd6e8" strokeWidth={sw} strokeLinecap="round" />
       <circle cx={base[0]} cy={base[1]} r={4} fill="#e8b24c" />
-      <text x={130} y={112} textAnchor="middle" fill="#efeafa" fontFamily="var(--serif)" fontSize={46} fontWeight={600}>{p.toFixed(2)}</text>
+      <text x={130} y={112} textAnchor="middle" fill="#efeafa" fontFamily="var(--sans)" fontSize={46} fontWeight={600}>{p.toFixed(2)}</text>
       <text x={130} y={134} textAnchor="middle" fill="#8b82a6" fontFamily="var(--mono)" fontSize={10.5} letterSpacing={1}>{`CALIBRATED P · CI ${ci[0].toFixed(2)}–${ci[1].toFixed(2)}`}</text>
     </svg>
   );
@@ -40,14 +40,14 @@ function Gauge({ p, ci, baselineP }: { p: number; ci: [number, number]; baseline
 /** The pipeline console: layers emit signals, the aggregator sums them into a
  *  calibrated forecast with a timing window. */
 export function PredictionPipeline() {
-  const forecast = aggregate(LAYERS, BASE_LOGIT, 0.12, "2026–2028 · Śani mahādaśā");
+  const forecast = aggregate(LAYERS, BASE_LOGIT, 0.12, "2026–2028 · Jupiter period");
   const maxAbs = 0.32;
 
   return (
     <section style={{ padding: "72px 0", borderTop: "1px solid var(--line)" }}>
       <div className="wrap">
         <span className="eyebrow">The Proper Sum</span>
-        <h2 style={{ fontFamily: "var(--serif)", color: "var(--ink)", fontSize: "clamp(24px,4vw,36px)", margin: "10px 0 28px" }}>
+        <h2 style={{ fontFamily: "var(--sans)", color: "var(--ink)", fontSize: "clamp(24px,4vw,36px)", margin: "10px 0 28px" }}>
           Fifty domains, one calibrated probability.
         </h2>
 

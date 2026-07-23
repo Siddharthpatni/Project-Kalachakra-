@@ -1,49 +1,55 @@
 /**
- * Reference chart data — real output from the Python astro engine
- * (kalachakra.astro) for Delhi, 1990-03-15 10:30 IST, Lahiri sidereal.
- * Regenerate with: `python -m kalachakra.astro` style scripts.
+ * Reference chart — real output from the Python astro engine
+ * (kalachakra.astro) for Vadodara, India, 2002-11-13 12:37 IST, Lahiri sidereal.
+ * Personal identifiers (name, profession) are NOT stored here; they live only
+ * in the gitignored data/raw/ record.
  */
 
 export interface Graha {
-  dev: string;
+  short: string;
   en: string;
   lon: number; // sidereal ecliptic longitude, degrees
-  color: string;
+  sign: string;
+  nak: string;
+  house: number;
   retro: boolean;
+  color: string;
 }
 
 export interface DashaPeriod {
-  dev: string;
-  en: string;
-  years: number;
+  lord: string;
   start: number;
+  years: number;
+  color: string;
   now?: boolean;
 }
 
-export const GRAHAS: Graha[] = [
-  { dev: "सूर्य", en: "Sun", lon: 330.63, color: "#ffcf5a", retro: false },
-  { dev: "चन्द्र", en: "Moon", lon: 192.55, color: "#e7e2f5", retro: false },
-  { dev: "मङ्गल", en: "Mars", lon: 278.9, color: "#e5433b", retro: false },
-  { dev: "बुध", en: "Mercury", lon: 326.94, color: "#8fe38f", retro: false },
-  { dev: "गुरु", en: "Jupiter", lon: 67.64, color: "#ff9a3d", retro: false },
-  { dev: "शुक्र", en: "Venus", lon: 285.16, color: "#8fd8ff", retro: false },
-  { dev: "शनि", en: "Saturn", lon: 269.59, color: "#9c8bd6", retro: false },
-  { dev: "राहु", en: "Rahu", lon: 290.86, color: "#b98cff", retro: true },
-  { dev: "केतु", en: "Ketu", lon: 110.86, color: "#c8a0ff", retro: true },
+export const ASCENDANT = 288.56; // Capricorn
+
+export const SIGN_ABBR: string[] = [
+  "Ar", "Ta", "Ge", "Cn", "Le", "Vi", "Li", "Sc", "Sg", "Cp", "Aq", "Pi",
 ];
 
-export const RASHIS: string[] = [
-  "Me", "Vr", "Mi", "Ka", "Si", "Kn", "Tu", "Vc", "Dh", "Mk", "Km", "Mn",
+export const GRAHAS: Graha[] = [
+  { short: "Su", en: "Sun", lon: 206.83, sign: "Libra", nak: "Vishakha", house: 10, retro: false, color: "#f59e0b" },
+  { short: "Mo", en: "Moon", lon: 312.91, sign: "Aquarius", nak: "Shatabhisha", house: 2, retro: false, color: "#38bdf8" },
+  { short: "Ma", en: "Mars", lon: 174.36, sign: "Virgo", nak: "Chitra", house: 9, retro: false, color: "#ef4444" },
+  { short: "Me", en: "Mercury", lon: 206.3, sign: "Libra", nak: "Vishakha", house: 10, retro: false, color: "#22c55e" },
+  { short: "Ju", en: "Jupiter", lon: 113.49, sign: "Cancer", nak: "Ashlesha", house: 7, retro: false, color: "#f97316" },
+  { short: "Ve", en: "Venus", lon: 187.48, sign: "Libra", nak: "Swati", house: 10, retro: true, color: "#ec4899" },
+  { short: "Sa", en: "Saturn", lon: 64.23, sign: "Gemini", nak: "Mrigashira", house: 6, retro: true, color: "#8b5cf6" },
+  { short: "Ra", en: "Rahu", lon: 45.72, sign: "Taurus", nak: "Rohini", house: 5, retro: true, color: "#a855f7" },
+  { short: "Ke", en: "Ketu", lon: 225.72, sign: "Scorpio", nak: "Anuradha", house: 11, retro: true, color: "#6366f1" },
 ];
 
 export const DASHAS: DashaPeriod[] = [
-  { dev: "राहु", en: "RAHU", years: 10.06, start: 1990 },
-  { dev: "गुरु", en: "GURU", years: 16, start: 2000 },
-  { dev: "शनि", en: "SHANI", years: 19, start: 2016, now: true },
-  { dev: "बुध", en: "BUDHA", years: 17, start: 2035 },
-  { dev: "केतु", en: "KETU", years: 7, start: 2052 },
-  { dev: "शुक्र", en: "SHUKRA", years: 20, start: 2059 },
-  { dev: "सूर्य", en: "SURYA", years: 6, start: 2079 },
-  { dev: "चन्द्र", en: "CHANDRA", years: 10, start: 2085 },
-  { dev: "मङ्गल", en: "MANGALA", years: 7, start: 2095 },
+  { lord: "Rahu", start: 2002, years: 9.57, color: "#a855f7" },
+  { lord: "Jupiter", start: 2012, years: 16, color: "#f97316", now: true },
+  { lord: "Saturn", start: 2028, years: 19, color: "#8b5cf6" },
+  { lord: "Mercury", start: 2047, years: 17, color: "#22c55e" },
+  { lord: "Ketu", start: 2064, years: 7, color: "#6366f1" },
+  { lord: "Venus", start: 2071, years: 20, color: "#ec4899" },
+  { lord: "Sun", start: 2091, years: 6, color: "#f59e0b" },
+  { lord: "Moon", start: 2097, years: 10, color: "#38bdf8" },
+  { lord: "Mars", start: 2107, years: 7, color: "#ef4444" },
 ];
