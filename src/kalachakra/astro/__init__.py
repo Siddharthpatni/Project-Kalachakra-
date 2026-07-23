@@ -20,10 +20,13 @@ from kalachakra.astro.coordinates import (
     tropical_to_sidereal,
 )
 from kalachakra.astro.ephemeris import (
-    PlanetPosition,
-    all_positions,
-    configure_ephemeris,
-    planet_position,
+    AyanamshaSystem,
+    CelestialSnapshot,
+    EphemerisEngine,
+    PlanetaryPosition,
+    datetime_to_jd,
+    jd_to_datetime,
+    julian_centuries,
 )
 from kalachakra.astro.time import (
     from_julian_day,
@@ -36,6 +39,9 @@ __all__ = [
     "to_julian_day",
     "from_julian_day",
     "julian_centuries_since_j2000",
+    "datetime_to_jd",
+    "jd_to_datetime",
+    "julian_centuries",
     # coordinates
     "ayanamsha_degrees",
     "tropical_to_sidereal",
@@ -43,10 +49,10 @@ __all__ = [
     "obliquity",
     "ecliptic_to_equatorial",
     # ephemeris
-    "PlanetPosition",
-    "planet_position",
-    "all_positions",
-    "configure_ephemeris",
+    "EphemerisEngine",
+    "PlanetaryPosition",
+    "CelestialSnapshot",
+    "AyanamshaSystem",
     # charts
     "BirthChart",
     "DashaPeriod",

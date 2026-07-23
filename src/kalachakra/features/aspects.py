@@ -12,7 +12,7 @@ from __future__ import annotations
 
 from itertools import combinations
 
-from kalachakra.astro.ephemeris import PlanetPosition
+from kalachakra.astro.ephemeris import PlanetaryPosition
 from kalachakra.core.constants import SPECIAL_ASPECTS, Graha
 from kalachakra.math.angles import angular_separation, sign_index
 
@@ -34,11 +34,11 @@ def _casts_drishti(from_graha: Graha, from_sign: int, to_sign: int) -> bool:
     return house_distance in SPECIAL_ASPECTS.get(from_graha, [])
 
 
-def aspect_features(positions: dict[Graha, PlanetPosition]) -> dict[str, float]:
+def aspect_features(positions: dict[Graha, PlanetaryPosition]) -> dict[str, float]:
     """Compute aspect-count features for a set of graha positions.
 
     Args:
-        positions: Mapping from graha to its :class:`PlanetPosition`.
+        positions: Mapping from graha to its :class:`PlanetaryPosition`.
 
     Returns:
         Dictionary of feature name to count, covering Ptolemaic aspect counts,
@@ -48,7 +48,9 @@ def aspect_features(positions: dict[Graha, PlanetPosition]) -> dict[str, float]:
     grahas = list(positions.keys())
 
     for a, b in combinations(grahas, 2):
-        sep = angular_separation(positions[a].longitude, positions[b].longitude)
+        sep = angular_separation(
+            positions[a].sidereal_longitude, positions[b].sidereal_longitude
+        )
         for name, (angle, orb) in _PTOLEMAIC.items():
             if abs(sep - angle) <= orb:
                 counts[f"aspect_{name}"] += 1.0
@@ -56,11 +58,11 @@ def aspect_features(positions: dict[Graha, PlanetPosition]) -> dict[str, float]:
 
     drishti = 0
     for a in grahas:
-        sa = sign_index(positions[a].longitude)
+        sa = sign_index(positions[a].sidereal_longitude)
         for b in grahas:
             if a == b:
                 continue
-            sb = sign_index(positions[b].longitude)
+            sb = sign_index(positions[b].sidereal_longitude)
             if _casts_drishti(a, sa, sb):
                 drishti += 1
     counts["drishti_total"] = float(drishti)

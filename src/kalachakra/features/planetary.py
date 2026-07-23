@@ -9,7 +9,7 @@ features from :mod:`kalachakra.features.dignity`.
 
 from __future__ import annotations
 
-from kalachakra.astro.ephemeris import PlanetPosition
+from kalachakra.astro.ephemeris import PlanetaryPosition
 from kalachakra.core.constants import Graha
 from kalachakra.features.cyclical import cyclical_encode
 from kalachakra.features.dignity import (
@@ -17,7 +17,7 @@ from kalachakra.features.dignity import (
     exaltation_proximity,
     is_own_sign,
 )
-from kalachakra.math.angles import angular_separation
+from kalachakra.math.angles import angular_separation, sign_index
 
 # Combustion orbs (degrees from the Sun) at which each graha is "burnt".
 _COMBUSTION_ORB: dict[Graha, float] = {
@@ -48,31 +48,32 @@ def is_combust(graha: Graha, longitude: float, sun_longitude: float) -> bool:
 
 
 def planet_features(
-    graha: Graha, position: PlanetPosition, sun_longitude: float, house: int
+    graha: Graha, position: PlanetaryPosition, sun_longitude: float, house: int
 ) -> dict[str, float]:
     """Compute the numeric feature block for one graha.
 
     Args:
         graha: The planet.
-        position: Its :class:`PlanetPosition`.
+        position: Its :class:`~kalachakra.astro.ephemeris.PlanetaryPosition`.
         sun_longitude: The Sun's sidereal longitude (for combustion).
         house: The whole-sign house (1–12) the graha occupies.
 
     Returns:
         Dictionary of feature name to value, all prefixed by the graha name.
     """
-    lon_sin, lon_cos = cyclical_encode(position.longitude)
+    lon = position.sidereal_longitude
+    lon_sin, lon_cos = cyclical_encode(lon)
     p = graha.name.lower()
     return {
         f"{p}_lon_sin": lon_sin,
         f"{p}_lon_cos": lon_cos,
-        f"{p}_deg_in_sign": position.degrees_in_sign,
-        f"{p}_sign": float(position.sign_index),
+        f"{p}_deg_in_sign": position.rashi_degree,
+        f"{p}_sign": float(sign_index(lon)),
         f"{p}_house": float(house),
-        f"{p}_speed": position.speed_longitude,
-        f"{p}_retrograde": 1.0 if position.retrograde else 0.0,
-        f"{p}_combust": 1.0 if is_combust(graha, position.longitude, sun_longitude) else 0.0,
-        f"{p}_exalt_prox": exaltation_proximity(graha, position.longitude),
-        f"{p}_own_sign": 1.0 if is_own_sign(graha, position.longitude) else 0.0,
-        f"{p}_dignity": dignity_score(graha, position.longitude),
+        f"{p}_speed": position.speed_deg_per_day,
+        f"{p}_retrograde": 1.0 if position.is_retrograde else 0.0,
+        f"{p}_combust": 1.0 if is_combust(graha, lon, sun_longitude) else 0.0,
+        f"{p}_exalt_prox": exaltation_proximity(graha, lon),
+        f"{p}_own_sign": 1.0 if is_own_sign(graha, lon) else 0.0,
+        f"{p}_dignity": dignity_score(graha, lon),
     }

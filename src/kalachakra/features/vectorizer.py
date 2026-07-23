@@ -53,8 +53,8 @@ def chart_to_features(chart: BirthChart, as_of: datetime | None = None) -> Featu
         A :class:`FeatureVector` with deterministic feature ordering.
     """
     feats: dict[str, float] = {}
-    sun_lon = chart.positions[Graha.SURYA].longitude
-    moon_lon = chart.positions[Graha.CHANDRA].longitude
+    sun_lon = chart.positions[Graha.SURYA].sidereal_longitude
+    moon_lon = chart.positions[Graha.CHANDRA].sidereal_longitude
 
     for graha, pos in chart.positions.items():
         feats.update(planet_features(graha, pos, sun_lon, chart.houses[graha]))

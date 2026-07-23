@@ -49,6 +49,6 @@ def dasha_features(chart: BirthChart, as_of: datetime | None = None) -> dict[str
     feats["dasha_fraction_elapsed"] = max(0.0, min(1.0, elapsed / span)) if span > 0 else 0.0
 
     lord_pos = chart.positions[period.lord]
-    feats["dasha_lord_dignity"] = dignity_score(period.lord, lord_pos.longitude)
-    feats["dasha_lord_retrograde"] = 1.0 if lord_pos.retrograde else 0.0
+    feats["dasha_lord_dignity"] = dignity_score(period.lord, lord_pos.sidereal_longitude)
+    feats["dasha_lord_retrograde"] = 1.0 if lord_pos.is_retrograde else 0.0
     return feats

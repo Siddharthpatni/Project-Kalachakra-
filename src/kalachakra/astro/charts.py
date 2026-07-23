@@ -1,11 +1,18 @@
 """
 Domain 2 — Birth chart assembly and the Vimshottari dasha.
 
-Combines the ephemeris, the ascendant (lagna), whole-sign house assignment, and
-the 120-year Vimshottari mahadasha timeline into a single :class:`BirthChart`.
-The dasha is derived deterministically from the Moon's sidereal longitude: the
-nakshatra it occupies fixes the starting planetary period and the fraction of
-that nakshatra already traversed fixes how much of the first period remains.
+Research References:
+    - Parashara, "Brihat Parashara Hora Shastra" (Vimshottari dasha system,
+      Ch. 46–47; nakshatra-lord period lengths summing to 120 years)
+    - Meeus, J. "Astronomical Algorithms" (2nd ed., 1998) — house/ascendant math
+    - Swiss Ephemeris Technical Documentation — swe.houses_ex()
+
+Combines the :class:`~kalachakra.astro.ephemeris.EphemerisEngine`, the ascendant
+(lagna), whole-sign house assignment, and the 120-year Vimshottari mahadasha
+timeline into a single :class:`BirthChart`. The dasha is derived deterministically
+from the Moon's sidereal longitude: the nakshatra it occupies fixes the starting
+planetary period, and the fraction of that nakshatra already traversed fixes how
+much of the first period remains.
 """
 
 from __future__ import annotations
@@ -16,7 +23,11 @@ from datetime import datetime, timedelta
 import swisseph as swe
 
 from kalachakra.astro.coordinates import tropical_to_sidereal
-from kalachakra.astro.ephemeris import PlanetPosition, all_positions
+from kalachakra.astro.ephemeris import (
+    AyanamshaSystem,
+    EphemerisEngine,
+    PlanetaryPosition,
+)
 from kalachakra.astro.time import to_julian_day
 from kalachakra.core.constants import (
     DASHA_SEQUENCE,
@@ -30,8 +41,18 @@ from kalachakra.core.constants import (
 )
 from kalachakra.math.angles import normalize_degrees, sign_index
 
-# Vimshottari convention: a "year" is 365.25 days.
+# Vimshottari convention: a "year" is 365.25 days (Parashara, BPHS Ch. 46).
 _DASHA_YEAR_DAYS: float = 365.25
+
+# Map the project's Ayanamsha enum onto the ephemeris engine's system enum.
+_AYANAMSHA_MAP: dict[Ayanamsha, AyanamshaSystem] = {
+    Ayanamsha.LAHIRI: AyanamshaSystem.LAHIRI,
+    Ayanamsha.RAMAN: AyanamshaSystem.RAMAN,
+    Ayanamsha.KRISHNAMURTI: AyanamshaSystem.KRISHNAMURTI,
+    Ayanamsha.YUKTESHWAR: AyanamshaSystem.YUKTESHWAR,
+    Ayanamsha.FAGAN_BRADLEY: AyanamshaSystem.FAGAN_BRADLEY,
+    Ayanamsha.TRUE_CHITRAPAKSHA: AyanamshaSystem.TRUE_CITRA,
+}
 
 
 @dataclass(frozen=True, slots=True)
@@ -59,7 +80,7 @@ class BirthChart:
     ayanamsha: Ayanamsha
     house_system: str
     ascendant: float
-    positions: dict[Graha, PlanetPosition]
+    positions: dict[Graha, PlanetaryPosition]
     houses: dict[Graha, int]
     dashas: list[DashaPeriod] = field(default_factory=list)
 
@@ -69,7 +90,7 @@ class BirthChart:
         return Rashi(sign_index(self.ascendant) + 1)
 
     @property
-    def moon(self) -> PlanetPosition:
+    def moon(self) -> PlanetaryPosition:
         """The Moon's position (drives the dasha and much of Vedic analysis)."""
         return self.positions[Graha.CHANDRA]
 
@@ -86,6 +107,11 @@ def vimshottari_dasha(
 ) -> list[DashaPeriod]:
     """Compute the Vimshottari mahadasha timeline from the Moon's longitude.
 
+    Reference: Parashara, BPHS Ch. 46–47. The 120-year cycle is partitioned
+    among the nine grahas in fixed proportions; the birth nakshatra's lord opens
+    the sequence, and the balance of that first period is the un-traversed
+    fraction of the nakshatra times the lord's full period.
+
     Args:
         moon_longitude: Moon's **sidereal** ecliptic longitude in degrees.
         birth: Birth instant (timezone-aware recommended).
@@ -93,8 +119,7 @@ def vimshottari_dasha(
 
     Returns:
         Chronological list of :class:`DashaPeriod` covering at least
-        ``span_years`` from ``birth``. The first period is partial (the balance
-        remaining in the birth nakshatra's ruling period).
+        ``span_years`` from ``birth``. The first period is partial.
     """
     lon = normalize_degrees(moon_longitude)
     nak_index = int(lon // NAKSHATRA_SPAN)
@@ -167,16 +192,18 @@ def compute_chart(
     Returns:
         A populated :class:`BirthChart`.
     """
+    engine = EphemerisEngine(ayanamsha=_AYANAMSHA_MAP[ayanamsha], use_true_node=True)
     jd = to_julian_day(moment)
-    positions = all_positions(jd, sidereal=True, ayanamsha=ayanamsha)
+    positions = engine.get_celestial_snapshot(jd=jd).positions
+
     asc, cusps = _sidereal_ascendant(jd, latitude, longitude, ayanamsha, house_system)
     lagna_sign = sign_index(asc)
     whole_sign = house_system.upper() == "W"
     houses = {
-        graha: _house_of(pos.longitude, lagna_sign, cusps, whole_sign)
+        graha: _house_of(pos.sidereal_longitude, lagna_sign, cusps, whole_sign)
         for graha, pos in positions.items()
     }
-    dashas = vimshottari_dasha(positions[Graha.CHANDRA].longitude, moment)
+    dashas = vimshottari_dasha(positions[Graha.CHANDRA].sidereal_longitude, moment)
     return BirthChart(
         moment=moment,
         jd=jd,
